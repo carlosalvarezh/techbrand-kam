@@ -2741,14 +2741,35 @@ function agregarProductoCatalogo(){
 // ══════════════════════════════════════════════════════
 function exportarCSV(){
   if(!empresas.length){toast('Sin empresas para exportar.');return;}
-  const headers=['Razón Social','NIT','Sector','CIIU','Departamento','Municipio','Tamaño','Activos','Rep. Legal','Sitio Web','Teléfono Empresa','Categoría KAM','Estado','Cliente ESSS','Origen contacto','Canal específico','Feria origen','Nombre contacto','Cargo','Correo corporativo','Teléfono Contacto','LinkedIn URL','Hipótesis módulo ANSYS','Caso de uso','Próxima acción','Fecha acción','Notas','Fuente','Fecha'];
+  const headers=[
+    'Razón Social','NIT','Sector','CIIU','Departamento','Municipio','Tamaño',
+    'Activos','Rep. Legal','Sitio Web','Teléfono Empresa',
+    'LinkedIn Empresa','YouTube','Facebook','Instagram','X (Twitter)','WhatsApp Business','WeChat','Otra Red',
+    'Categoría KAM','Estado','Cliente ESSS','Origen contacto','Canal específico','Feria origen',
+    'Nombre contacto','Cargo','Ciudad contacto','Correo corporativo','Teléfono Contacto',
+    'WhatsApp Contacto','LinkedIn URL','X Contacto','WeChat Contacto','Canal preferido',
+    'Hipótesis módulo ANSYS','Caso de uso','Próxima acción','Fecha acción','Notas','Fuente','Fecha'
+  ];
   const rows=empresas.map(e=>{
-    let webVal=e.web||''; if(!webVal&&e.notas&&e.notas.startsWith('Web: ')) webVal=e.notas.replace('Web: ','').trim();
-    return [e.razon,e.nit,e.sector,e.ciiu,e.depto,e.municipio,e.tamano,e.activos,e.rep,webVal,e.telempresa||'',
+    let webVal=e.web||'';
+    if(!webVal&&e.notas&&e.notas.startsWith('Web: ')) webVal=e.notas.replace('Web: ','').trim();
+    const notasVal=(e.notas&&e.notas.startsWith('Web: '))?'':e.notas||'';
+    // Primer contacto
+    const c0=(e.contactos||[])[0]||{};
+    return [
+      e.razon,e.nit,e.sector,e.ciiu,e.depto,e.municipio,e.tamano,
+      e.activos,e.rep,webVal,e.telempresa||'',
+      e.sLinkedin||'',e.sYoutube||'',e.sFacebook||'',e.sInstagram||'',
+      e.sX||'',e.sWhatsapp||'',e.sWechat||'',e.sOtra||'',
       e.cat,e.estado,e.esss||'No',e.origen||'RUES',e.canalEspecifico||'',e.feriaOrigen||'',
-      e.cnombre,e.ccargo,e.ccorreo,e.ctelefono||'',e.clinkedin,e.hipotesis,e.casouso||'',
+      c0.nombre||e.cnombre||'',c0.cargo||e.ccargo||'',
+      c0.ciudad||'',
+      c0.correo||e.ccorreo||'',c0.telefono||e.ctelefono||'',
+      c0.whatsapp||'',c0.linkedin||e.clinkedin||'',
+      c0.x||'',c0.wechat||'',c0.canalPreferido||'',
+      e.hipotesis,e.casouso||'',
       e.accion||'',e.accionFecha||'',
-      (e.notas&&e.notas.startsWith('Web: '))?'':e.notas||'',e.fuente,e.fecha
+      notasVal,e.fuente,e.fecha
     ].map(v=>`"${(v||'').replace(/"/g,'""')}"`);
   });
   const csv=[headers.map(h=>`"${h}"`).join(','),...rows.map(r=>r.join(','))].join('\n');
@@ -2857,12 +2878,26 @@ function procesarCSVConTexto(texto, tipo) {
       activos:r['Activos']||'',rep:r['Rep. Legal']||'',
       web:r['Sitio Web']||r['Web']||'',
       telempresa:r['Teléfono Empresa']||r['TelÃ©fono Empresa']||'',
+      sLinkedin:r['LinkedIn Empresa']||'',
+      sYoutube:r['YouTube']||'',
+      sFacebook:r['Facebook']||'',
+      sInstagram:r['Instagram']||'',
+      sX:r['X (Twitter)']||'',
+      sWhatsapp:r['WhatsApp Business']||'',
+      sWechat:r['WeChat']||'',
+      sOtra:r['Otra Red']||'',
       cat:r['Categoría KAM']||r['CategorÃ­a KAM']||r['Categoria KAM']||'B',
       estado:r['Estado']||'Nuevo',
-      cnombre:r['Nombre contacto']||'',ccargo:r['Cargo']||'',
+      cnombre:r['Nombre contacto']||'',
+      ccargo:r['Cargo']||'',
       ccorreo:r['Correo corporativo']||'',
       ctelefono:r['Teléfono Contacto']||r['TelÃ©fono Contacto']||'',
       clinkedin:r['LinkedIn URL']||'',
+      _cciudad:r['Ciudad contacto']||'',
+      _cwhatsapp:r['WhatsApp Contacto']||'',
+      _cx:r['X Contacto']||'',
+      _cwechat:r['WeChat Contacto']||'',
+      _ccanal:r['Canal preferido']||'',
       hipotesis:r['Hipótesis módulo ANSYS']||r['HipÃ³tesis mÃ³dulo ANSYS']||r['Hipotesis modulo ANSYS']||'',
       accion:r['Próxima acción']||r['PrÃ³xima acciÃ³n']||'',
       accionFecha:r['Fecha acción']||r['Fecha acciÃ³n']||'',
@@ -2933,17 +2968,46 @@ function confirmarImport(tipo){
   pending.forEach(p=>{
     const existe=empresas.find(e=>e.razon.toLowerCase()===p.razon.toLowerCase());
     if(existe){
-      if(tipo==='nativo') ['nit','ciiu','sector','depto','municipio','tamano','activos','rep','cat'].forEach(k=>{if(p[k]) existe[k]=p[k];});
+      if(tipo==='nativo'){
+        ['nit','ciiu','sector','depto','municipio','tamano','activos','rep','cat',
+         'web','telempresa','hipotesis','accion','accionFecha',
+         'sLinkedin','sYoutube','sFacebook','sInstagram','sX','sWhatsapp','sWechat','sOtra'
+        ].forEach(k=>{if(p[k]) existe[k]=p[k];});
+      } else {
+        ['web','telempresa','hipotesis'].forEach(k=>{if(p[k]&&!existe[k]) existe[k]=p[k];});
+      }
       if(p.cnombre&&p.cnombre.trim()){
         if(!existe.contactos) existe.contactos=[];
         const ya=existe.contactos.find(c=>c.nombre.toLowerCase()===p.cnombre.toLowerCase());
-        if(!ya){existe.contactos.push({id:Date.now()+Math.random(),nombre:p.cnombre||'',cargo:p.ccargo||'',rol:'Decisor técnico',correo:p.ccorreo||'',telefono:p.ctelefono||'',linkedin:p.clinkedin||''});actualizadas++;}
+        if(!ya){
+          existe.contactos.push({
+            id:Date.now()+Math.random(),
+            nombre:p.cnombre||'',cargo:p.ccargo||'',rol:'Decisor técnico',
+            ciudad:p._cciudad||'',
+            correo:p.ccorreo||'',telefono:p.ctelefono||'',
+            whatsapp:p._cwhatsapp||'',
+            linkedin:p.clinkedin||'',
+            x:p._cx||'',wechat:p._cwechat||'',
+            canalPreferido:p._ccanal||''
+          });
+          actualizadas++;
+        }
       }
-      ['web','telempresa','hipotesis'].forEach(k=>{if(p[k]&&!existe[k]) existe[k]=p[k];});
       sincronizarLegacy(empresas.indexOf(existe));
     } else {
       const ne={id:Date.now()+Math.random(),...p,contactos:[],actividades:[]};
-      if(p.cnombre) ne.contactos.push({id:Date.now()+Math.random(),nombre:p.cnombre||'',cargo:p.ccargo||'',rol:'Decisor técnico',correo:p.ccorreo||'',telefono:p.ctelefono||'',linkedin:p.clinkedin||''});
+      if(p.cnombre){
+        ne.contactos.push({
+          id:Date.now()+Math.random(),
+          nombre:p.cnombre||'',cargo:p.ccargo||'',rol:'Decisor técnico',
+          ciudad:p._cciudad||'',
+          correo:p.ccorreo||'',telefono:p.ctelefono||'',
+          whatsapp:p._cwhatsapp||'',
+          linkedin:p.clinkedin||'',
+          x:p._cx||'',wechat:p._cwechat||'',
+          canalPreferido:p._ccanal||''
+        });
+      }
       empresas.push(ne); nuevas++;
     }
   });
