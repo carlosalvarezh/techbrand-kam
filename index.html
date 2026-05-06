@@ -469,7 +469,7 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
 <div id="app">
   <nav id="sidebar">
     <div class="sidebar-brand">
-      <span class="brand-tag">KAM Tool v7</span>
+      <span class="brand-tag">KAM Tool v6</span>
       <span class="brand-name">Techbrand Colombia</span>
     </div>
     <div class="sidebar-section">
@@ -491,17 +491,14 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
     <div class="sidebar-section">
       <div class="sidebar-section-label">Configuración</div>
       <div class="nav-item" onclick="switchPanel('catalogo',this)"><span class="nav-icon">⊞</span> Catálogo ANSYS</div>
-      <div class="nav-item" onclick="switchPanel('sincronizacion',this)"><span class="nav-icon">☁</span> Sincronización</div>
+      <div class="nav-item" onclick="switchPanel('sync',this)"><span class="nav-icon">☁</span> Sincronización</div>
     </div>
     <div class="sidebar-bottom">
       <div class="stat-mini"><span class="stat-mini-label">Empresas</span><span class="stat-mini-val" id="sb-total">0</span></div>
       <div class="stat-mini"><span class="stat-mini-label">Oportunidades</span><span class="stat-mini-val" id="sb-opor">0</span></div>
       <div class="stat-mini"><span class="stat-mini-label">Pipeline USD</span><span class="stat-mini-val" id="sb-pipeline">$0</span></div>
       <div class="stat-mini"><span class="stat-mini-label">Excluidos ESSS</span><span class="stat-mini-val" id="sb-esss" style="color:#fc8181">0</span></div>
-      <div id="sync-indicator" style="margin-top:8px;padding:6px 8px;border-radius:5px;background:rgba(0,0,0,0.2);display:flex;align-items:center;gap:6px;cursor:pointer" onclick="switchPanel('sincronizacion',document.querySelector('.nav-item[onclick*=sincronizacion]'))">
-        <span id="sync-dot" style="width:7px;height:7px;border-radius:50%;background:#718096;flex-shrink:0"></span>
-        <span id="sync-label" style="font-size:10px;color:rgba(255,255,255,0.5);font-family:'IBM Plex Mono',monospace">Sin configurar</span>
-      </div>
+      <div id="sync-indicator" style="margin-top:8px;padding:6px 8px;border-radius:5px;font-size:10px;font-family:'IBM Plex Mono',monospace;text-align:center;background:rgba(0,0,0,0.2);color:rgba(255,255,255,0.5)">☁ Sin configurar</div>
       <div class="save-indicator" id="save-indicator">—</div>
     </div>
   </nav>
@@ -565,7 +562,7 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
         </div>
         <div class="card">
           <div class="card-header"><span class="card-title">Distribución por sector</span></div>
-          <div class="card-body"><div id="d-sectores" class="stats-row" style="grid-template-columns:repeat(5,1fr)"></div></div>
+          <div class="card-body"><div id="d-sectores" class="stats-row" style="grid-template-columns:repeat(4,1fr)"></div></div>
         </div>
         <div class="card">
           <div class="card-header"><span class="card-title">Acciones vencidas — requieren seguimiento</span></div>
@@ -604,9 +601,19 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
               <div class="form-group"><label class="form-label">Sector *</label>
                 <select class="form-control" id="r-sector">
                   <option value="">— Seleccionar —</option>
-                  <option>Minería</option><option>Oil & Gas</option><option>Energía</option>
-                  <option>Manufactura Avanzada</option><option>Consultoría de Ingeniería</option>
-                  <option>Autopartes</option><option>Construcción / Infraestructura</option>
+                  <option>Aeroespacial</option>
+                  <option>Alta Tecnología y Electrónica</option>
+                  <option>Automotriz y Movilidad</option>
+                  <option>Bienes de Consumo</option>
+                  <option>Construcción e Infraestructura</option>
+                  <option>Defensa y Seguridad</option>
+                  <option>Energía y Recursos Naturales</option>
+                  <option>Equipos Industriales y Minería</option>
+                  <option>Espacial</option>
+                  <option>Materiales y Química</option>
+                  <option>Oil & Gas</option>
+                  <option>Salud y Ciencias de la Vida</option>
+                  <option>Deportes y Biomecánica</option>
                 </select>
               </div>
               <div class="form-group"><label class="form-label">Departamento</label>
@@ -671,6 +678,17 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
               </div>
             </div>
             <hr class="section-hr">
+            <div class="section-title">Redes sociales de la empresa</div>
+            <div class="form-grid">
+              <div class="form-group"><label class="form-label">LinkedIn empresa</label><input class="form-control" id="r-s-linkedin" placeholder="https://linkedin.com/company/..."></div>
+              <div class="form-group"><label class="form-label">YouTube</label><input class="form-control" id="r-s-youtube" placeholder="https://youtube.com/@..."></div>
+              <div class="form-group"><label class="form-label">Facebook</label><input class="form-control" id="r-s-facebook" placeholder="https://facebook.com/..."></div>
+              <div class="form-group"><label class="form-label">Instagram</label><input class="form-control" id="r-s-instagram" placeholder="https://instagram.com/..."></div>
+              <div class="form-group"><label class="form-label">X (Twitter)</label><input class="form-control" id="r-s-x" placeholder="https://x.com/..."></div>
+              <div class="form-group"><label class="form-label">WhatsApp Business</label><input class="form-control" id="r-s-whatsapp" placeholder="+57 300 000 0000"></div>
+              <div class="form-group"><label class="form-label">WeChat</label><input class="form-control" id="r-s-wechat" placeholder="ID de WeChat"></div>
+              <div class="form-group"><label class="form-label">Otra red / plataforma</label><input class="form-control" id="r-s-otra" placeholder="ej: Telegram, TikTok, etc."></div>
+            <hr class="section-hr">
             <div class="section-title">Próxima acción (gestión de seguimiento)</div>
             <div class="form-grid">
               <div class="form-group"><label class="form-label">Próxima acción</label><input class="form-control" id="r-accion" placeholder="ej: Llamar al Dir. Ingeniería para agendar demo"></div>
@@ -687,9 +705,20 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
                   <option value="Influenciador">Influenciador</option><option value="Bloqueador">Bloqueador</option><option value="Referente interno">Referente interno</option>
                 </select>
               </div>
+              <div class="form-group"><label class="form-label">Ciudad donde reside</label><input class="form-control" id="r-cciudad" placeholder="ej: Medellín, Bogotá, Cartagena"></div>
               <div class="form-group"><label class="form-label">Correo corporativo</label><input class="form-control" id="r-ccorreo" placeholder="nombre@empresa.com.co" type="email"></div>
               <div class="form-group"><label class="form-label">Teléfono / celular</label><input class="form-control" id="r-ctelefono" placeholder="+57 300 000 0000"></div>
+              <div class="form-group"><label class="form-label">WhatsApp</label><input class="form-control" id="r-cwhatsapp" placeholder="+57 300 000 0000"></div>
+              <div class="form-group"><label class="form-label">Canal preferido</label>
+                <select class="form-control" id="r-ccanal">
+                  <option value="">— Seleccionar —</option>
+                  <option>WhatsApp</option><option>Email</option><option>Llamada</option>
+                  <option>LinkedIn</option><option>WeChat</option>
+                </select>
+              </div>
               <div class="form-group form-grid-full"><label class="form-label">LinkedIn URL</label><input class="form-control" id="r-clinkedin" placeholder="https://linkedin.com/in/..."></div>
+              <div class="form-group"><label class="form-label">X (Twitter)</label><input class="form-control" id="r-cx" placeholder="https://x.com/..."></div>
+              <div class="form-group"><label class="form-label">WeChat</label><input class="form-control" id="r-cwechat" placeholder="ID de WeChat"></div>
               <div class="form-group form-grid-full"><label class="form-label">Hipótesis de problema / módulo ANSYS probable</label><textarea class="form-control" id="r-hipotesis" placeholder="ej: Análisis estructural de tuberías — ANSYS Mechanical"></textarea></div>
               <div class="form-group form-grid-full"><label class="form-label">Caso de uso ANSYS identificado en conversación</label><textarea class="form-control" id="r-casouso" placeholder="ej: Análisis de fatiga en fajas transportadoras — identificado en feria"></textarea></div>
               <div class="form-group form-grid-full"><label class="form-label">Notas adicionales</label><textarea class="form-control" id="r-notas" placeholder="Contexto, señales detectadas, fuente..."></textarea></div>
@@ -706,10 +735,21 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
       <div id="panel-mapa" class="panel">
         <div class="search-bar">
           <input class="search-input" id="mapa-search" placeholder="Buscar empresa, contacto, municipio, hipótesis..." oninput="renderMapa()">
-          <select class="form-control" style="width:160px" id="mapa-sector" onchange="renderMapa()">
+          <select class="form-control" style="width:200px" id="mapa-sector" onchange="renderMapa()">
             <option value="">Todos los sectores</option>
-            <option>Minería</option><option>Oil & Gas</option><option>Energía</option>
-            <option>Manufactura Avanzada</option><option>Consultoría de Ingeniería</option>
+            <option>Aeroespacial</option>
+            <option>Alta Tecnología y Electrónica</option>
+            <option>Automotriz y Movilidad</option>
+            <option>Bienes de Consumo</option>
+            <option>Construcción e Infraestructura</option>
+            <option>Defensa y Seguridad</option>
+            <option>Energía y Recursos Naturales</option>
+            <option>Equipos Industriales y Minería</option>
+            <option>Espacial</option>
+            <option>Materiales y Química</option>
+            <option>Oil & Gas</option>
+            <option>Salud y Ciencias de la Vida</option>
+            <option>Deportes y Biomecánica</option>
           </select>
           <select class="form-control" style="width:140px" id="mapa-cat" onchange="renderMapa()">
             <option value="">Todas las cat.</option><option value="A">Categoría A</option><option value="B">Categoría B</option><option value="C">Categoría C</option>
@@ -748,9 +788,21 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
         <div class="alert alert-info"><span>ℹ</span><div>Ubica las empresas por municipio usando OpenStreetMap. Los marcadores se geocodifican al abrir el panel.</div></div>
         <div class="card" style="margin-bottom:12px">
           <div class="card-body" style="padding:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-            <select class="form-control" style="width:160px" id="geo-sector" onchange="filtrarMapaGeo()">
-              <option value="">Todos los sectores</option><option>Minería</option><option>Oil & Gas</option>
-              <option>Energía</option><option>Manufactura Avanzada</option><option>Consultoría de Ingeniería</option>
+            <select class="form-control" style="width:210px" id="geo-sector" onchange="filtrarMapaGeo()">
+              <option value="">Todos los sectores</option>
+              <option>Aeroespacial</option>
+              <option>Alta Tecnología y Electrónica</option>
+              <option>Automotriz y Movilidad</option>
+              <option>Bienes de Consumo</option>
+              <option>Construcción e Infraestructura</option>
+              <option>Defensa y Seguridad</option>
+              <option>Energía y Recursos Naturales</option>
+              <option>Equipos Industriales y Minería</option>
+              <option>Espacial</option>
+              <option>Materiales y Química</option>
+              <option>Oil & Gas</option>
+              <option>Salud y Ciencias de la Vida</option>
+              <option>Deportes y Biomecánica</option>
             </select>
             <select class="form-control" style="width:140px" id="geo-cat" onchange="filtrarMapaGeo()">
               <option value="">Todas las cat.</option><option value="A">Categoría A</option><option value="B">Categoría B</option><option value="C">Categoría C</option>
@@ -945,10 +997,20 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
               <div class="form-group"><label class="form-label">Ciudad</label><input class="form-control" id="f-ciudad" placeholder="ej: Medellín"></div>
               <div class="form-group"><label class="form-label">Sector objetivo</label>
                 <select class="form-control" id="f-sector">
-                  <option>Minería</option><option>Oil & Gas</option><option>Energía / Gas natural</option>
-                  <option>Manufactura Avanzada</option><option>Autopartes</option>
-                  <option>Construcción / Infraestructura</option><option>Ingeniería Civil</option>
-                  <option>Energía Renovable</option><option>Multi-sector</option>
+                  <option>Aeroespacial</option>
+                  <option>Alta Tecnología y Electrónica</option>
+                  <option>Automotriz y Movilidad</option>
+                  <option>Bienes de Consumo</option>
+                  <option>Construcción e Infraestructura</option>
+                  <option>Defensa y Seguridad</option>
+                  <option>Energía y Recursos Naturales</option>
+                  <option>Equipos Industriales y Minería</option>
+                  <option>Espacial</option>
+                  <option>Materiales y Química</option>
+                  <option>Oil & Gas</option>
+                  <option>Salud y Ciencias de la Vida</option>
+                  <option>Deportes y Biomecánica</option>
+                  <option>Multi-sector</option>
                 </select>
               </div>
               <div class="form-group"><label class="form-label">Estado</label>
@@ -1064,109 +1126,6 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
         </div>
       </div>
 
-      <!-- ══════════════ SINCRONIZACIÓN GITHUB ══════════════ -->
-      <div id="panel-sincronizacion" class="panel">
-        <div class="alert alert-info"><span>ℹ</span><div>Los datos se guardan en un archivo <strong>data.json</strong> en tu repositorio de GitHub. El token se guarda solo en este dispositivo (localStorage) — nunca viaja al servidor ni aparece en el código.</div></div>
-
-        <div class="card">
-          <div class="card-header"><span class="card-title">Configuración del repositorio</span></div>
-          <div class="card-body">
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="form-label">Usuario u organización GitHub</label>
-                <input class="form-control" id="gh-user" placeholder="ej: carlosalvarez">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Nombre del repositorio</label>
-                <input class="form-control" id="gh-repo" placeholder="ej: techbrand-kam">
-              </div>
-              <div class="form-group form-grid-full">
-                <label class="form-label">Personal Access Token (Fine-grained)</label>
-                <input class="form-control" id="gh-token" type="password" placeholder="github_pat_...">
-                <div class="text-muted" style="margin-top:4px">Scope requerido: <strong>Contents: Read and write</strong> en el repositorio específico. Ver instrucciones abajo.</div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Rama</label>
-                <input class="form-control" id="gh-branch" placeholder="main" value="main">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Ruta del archivo de datos</label>
-                <input class="form-control" id="gh-path" placeholder="data.json" value="data.json">
-              </div>
-            </div>
-            <div class="btn-row">
-              <button class="btn btn-primary" onclick="guardarConfigGH()">Guardar configuración</button>
-              <button class="btn btn-ghost" onclick="probarConexionGH()">Probar conexión</button>
-              <button class="btn btn-ghost" onclick="sincronizarDesdeGH()">Cargar datos desde GitHub</button>
-            </div>
-            <div id="gh-test-result" style="display:none;margin-top:14px"></div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header-med"><span class="card-title">Estado de sincronización</span></div>
-          <div class="card-body">
-            <div class="stats-row" style="grid-template-columns:repeat(3,1fr)">
-              <div class="stat-card" style="padding:14px">
-                <div class="stat-label" style="font-size:10px">Último push</div>
-                <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;margin-top:6px;color:var(--azul)" id="gh-ultimo-push">—</div>
-              </div>
-              <div class="stat-card" style="padding:14px">
-                <div class="stat-label" style="font-size:10px">Último pull</div>
-                <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;margin-top:6px;color:var(--azul)" id="gh-ultimo-pull">—</div>
-              </div>
-              <div class="stat-card" style="padding:14px">
-                <div class="stat-label" style="font-size:10px">Empresas en repo</div>
-                <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;margin-top:6px;color:var(--azul)" id="gh-repo-count">—</div>
-              </div>
-            </div>
-            <div class="btn-row">
-              <button class="btn btn-success" onclick="pushGH(true)">Forzar push a GitHub ahora</button>
-              <button class="btn btn-ghost" onclick="sincronizarDesdeGH()">Cargar desde GitHub</button>
-            </div>
-            <div style="margin-top:14px;padding:12px 14px;background:var(--gris);border-radius:6px;font-size:12px;color:var(--gris-dark)">
-              <strong style="color:var(--texto)">Modo de operación:</strong> cada vez que guardas un dato (empresa, oportunidad, actividad), la app guarda primero en localStorage y luego hace push automático a GitHub. Al abrir la app en un dispositivo nuevo, carga los datos desde GitHub automáticamente si el token está configurado.
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header"><span class="card-title">Instrucciones de configuración inicial</span></div>
-          <div class="card-body">
-            <div class="section-title">Paso 1 — Crear el repositorio en GitHub</div>
-            <ol style="padding-left:20px;margin-bottom:16px;font-size:13px;line-height:2">
-              <li>Ve a <a href="https://github.com/new" target="_blank" style="color:var(--azul-med)">github.com/new</a></li>
-              <li>Nombre: <strong>techbrand-kam</strong> (o el que prefieras)</li>
-              <li>Visibilidad: <strong>Private</strong> (recomendado — contiene datos comerciales)</li>
-              <li>Marca "Add a README file" para que la rama <em>main</em> exista desde el inicio</li>
-              <li>Crea el repositorio</li>
-              <li>Sube el archivo <strong>data.json</strong> que descargaste: botón "Add file → Upload files"</li>
-              <li>Sube <strong>index.html</strong> (este archivo, renombrado)</li>
-            </ol>
-            <div class="section-title">Paso 2 — Activar GitHub Pages</div>
-            <ol style="padding-left:20px;margin-bottom:16px;font-size:13px;line-height:2">
-              <li>En el repo: Settings → Pages</li>
-              <li>Source: <strong>Deploy from a branch</strong></li>
-              <li>Branch: <strong>main</strong> / <strong>/ (root)</strong></li>
-              <li>Guarda — en ~2 minutos tendrás una URL tipo <em>https://tu-usuario.github.io/techbrand-kam/</em></li>
-              <li>Abre esa URL en cualquier dispositivo — esa es tu app</li>
-            </ol>
-            <div class="section-title">Paso 3 — Crear el Personal Access Token</div>
-            <ol style="padding-left:20px;margin-bottom:16px;font-size:13px;line-height:2">
-              <li>Ve a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" style="color:var(--azul-med)">github.com/settings/personal-access-tokens/new</a></li>
-              <li>Tipo: <strong>Fine-grained token</strong></li>
-              <li>Nombre: <em>KAM Tool Techbrand</em></li>
-              <li>Expiration: <strong>No expiration</strong> o 1 año</li>
-              <li>Repository access: <strong>Only select repositories</strong> → selecciona <em>techbrand-kam</em></li>
-              <li>Permissions → Repository permissions → <strong>Contents: Read and write</strong></li>
-              <li>Genera el token y cópialo — solo se muestra una vez</li>
-              <li>Pégalo en el campo "Personal Access Token" de arriba y guarda la configuración</li>
-            </ol>
-            <div class="alert alert-warn" style="margin-top:0"><span>⚠</span><div>El token se guarda en el <strong>localStorage de este dispositivo</strong>. Si limpias el navegador o usas otro dispositivo, debes volver a ingresarlo. El token nunca está en el código fuente del HTML publicado.</div></div>
-          </div>
-        </div>
-      </div>
-
       <!-- ══════════════ CATÁLOGO ANSYS ══════════════ -->
       <div id="panel-catalogo" class="panel">
         <div class="alert alert-info"><span>ℹ</span><div>Mantén actualizados los productos y precios. Los precios son referencia interna KAM — precio lista anual en USD. Se usan para construir cotizaciones estimadas en las oportunidades.</div></div>
@@ -1182,6 +1141,96 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
                 <tbody id="catalogo-tbody"></tbody>
               </table>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ SINCRONIZACIÓN GITHUB ══════════════ -->
+      <div id="panel-sync" class="panel">
+        <div class="alert alert-info"><span>ℹ</span><div>Configura una vez por dispositivo. El token se guarda solo en este navegador — nunca se sube al repositorio ni viaja por la red salvo en los headers de la API de GitHub.</div></div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">Configuración GitHub</span></div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Usuario GitHub</label>
+                <input class="form-control" id="sync-user" placeholder="ej: carlosalvarez" autocomplete="off">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Nombre del repositorio</label>
+                <input class="form-control" id="sync-repo" placeholder="ej: techbrand-kam" autocomplete="off">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Nombre del archivo de datos</label>
+                <input class="form-control" id="sync-file" placeholder="data.json" value="data.json">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Rama</label>
+                <input class="form-control" id="sync-branch" placeholder="main" value="main">
+              </div>
+              <div class="form-group form-grid-full">
+                <label class="form-label">Personal Access Token (PAT)</label>
+                <input class="form-control" id="sync-token" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="new-password">
+                <div class="text-muted" style="margin-top:4px">Scope mínimo necesario: <strong>Contents → Read and write</strong> solo en este repositorio.</div>
+              </div>
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-primary" onclick="guardarConfigSync()">Guardar configuración</button>
+              <button class="btn btn-ghost" onclick="probarConexion()">Probar conexión</button>
+              <button class="btn btn-danger" style="margin-left:auto" onclick="borrarConfigSync()">Borrar credenciales</button>
+            </div>
+            <div id="sync-test-result" style="margin-top:12px;display:none"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header-med"><span class="card-title">Sincronización manual</span></div>
+          <div class="card-body">
+            <p class="text-muted" style="margin-bottom:16px">Los datos se sincronizan automáticamente al guardar. Usa estos botones si necesitas forzar una sincronización.</p>
+            <div class="btn-row" style="margin-top:0">
+              <button class="btn btn-primary" onclick="pushGitHub(true)">Subir datos a GitHub ahora</button>
+              <button class="btn btn-ghost" onclick="pullGitHub(true)">Descargar datos desde GitHub</button>
+            </div>
+            <div id="sync-manual-result" style="margin-top:12px"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">Instrucciones de setup — una sola vez</span></div>
+          <div class="card-body">
+            <div class="section-title">Paso 1 — Crear el repositorio</div>
+            <p style="font-size:13px;color:var(--texto);margin-bottom:12px;line-height:1.7">En GitHub, crea un repositorio <strong>privado</strong> (recomendado) con cualquier nombre, ej. <code style="background:var(--gris);padding:1px 5px;border-radius:3px">techbrand-kam</code>. Márcalo como privado para que los datos no sean públicos.</p>
+
+            <div class="section-title">Paso 2 — Subir el archivo HTML</div>
+            <p style="font-size:13px;color:var(--texto);margin-bottom:4px;line-height:1.7">Desde la terminal:</p>
+            <div style="background:#0F2942;border-radius:6px;padding:12px 16px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#90CDF4;margin-bottom:12px;white-space:pre">git init
+git add index.html
+git commit -m "KAM Tool v9"
+git branch -M main
+git remote add origin https://github.com/TU_USUARIO/TU_REPO.git
+git push -u origin main</div>
+
+            <div class="section-title">Paso 3 — Crear el archivo data.json inicial</div>
+            <p style="font-size:13px;color:var(--texto);margin-bottom:4px;line-height:1.7">Crea un archivo <code style="background:var(--gris);padding:1px 5px;border-radius:3px">data.json</code> con el contenido mínimo:</p>
+            <div style="background:#0F2942;border-radius:6px;padding:12px 16px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#90CDF4;margin-bottom:12px">{"empresas":[],"alertas":[],"ferias":[],"pipeline":[],"oportunidades":[],"catalogo":[]}</div>
+            <p style="font-size:13px;color:var(--texto);margin-bottom:12px;line-height:1.7">Si ya tienes datos en el computador, usa el botón <strong>Subir datos a GitHub ahora</strong> después de configurar el token — eso crea el archivo automáticamente con tus datos actuales.</p>
+
+            <div class="section-title">Paso 4 — Habilitar GitHub Pages</div>
+            <p style="font-size:13px;color:var(--texto);margin-bottom:12px;line-height:1.7">En el repositorio → Settings → Pages → Source: <strong>Deploy from a branch</strong> → Branch: <strong>main</strong> → folder: <strong>/ (root)</strong> → Save. En 1-2 minutos la app estará en <code style="background:var(--gris);padding:1px 5px;border-radius:3px">https://TU_USUARIO.github.io/TU_REPO/</code></p>
+
+            <div class="section-title">Paso 5 — Crear el Personal Access Token</div>
+            <p style="font-size:13px;color:var(--texto);margin-bottom:4px;line-height:1.7">GitHub → Settings → Developer settings → Personal access tokens → <strong>Fine-grained tokens</strong> → Generate new token:</p>
+            <ul style="font-size:13px;color:var(--texto);line-height:1.9;padding-left:20px;margin-bottom:12px">
+              <li>Token name: <code style="background:var(--gris);padding:1px 5px;border-radius:3px">KAM Tool sync</code></li>
+              <li>Expiration: 90 days (renovar cada 3 meses)</li>
+              <li>Repository access: <strong>Only select repositories</strong> → tu repo</li>
+              <li>Permissions → Repository permissions → <strong>Contents: Read and write</strong></li>
+            </ul>
+            <p style="font-size:13px;color:var(--texto);margin-bottom:12px;line-height:1.7">Copia el token generado (<code style="background:var(--gris);padding:1px 5px;border-radius:3px">ghp_...</code>) y pégalo en el campo de arriba. Solo se muestra una vez.</p>
+
+            <div class="section-title">Paso 6 — Configurar en cada dispositivo</div>
+            <p style="font-size:13px;color:var(--texto);line-height:1.7">Abre la URL de GitHub Pages en el celular → panel Sincronización → ingresa los mismos datos (usuario, repo, token) → Guardar → Descargar datos desde GitHub. Listo.</p>
           </div>
         </div>
       </div>
@@ -1252,8 +1301,12 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
 // DATA
 // ══════════════════════════════════════════════════════
 const STORAGE_KEY = 'kam_techbrand_v2';
+const SYNC_KEY = 'kam_github_sync_v1';
 let empresas = [], alertasSecop = [], csvPending = {}, editIdx = null;
 let ferias = [], pipeline = [], oportunidades = [], catalogoANSYS = [];
+
+// ── Config de sincronización (se carga de localStorage) ──
+let syncConfig = { user:'', repo:'', file:'data.json', branch:'main', token:'' };
 
 // Catálogo inicial ANSYS — precios referencia lista USD/año por licencia
 const CATALOGO_DEFAULT = [
@@ -1285,208 +1338,196 @@ const CATALOGO_DEFAULT = [
 ];
 
 // ══════════════════════════════════════════════════════
-// PERSISTENCIA + SINCRONIZACIÓN GITHUB
+// PERSISTENCIA
+// ══════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════
+// GITHUB SYNC
 // ══════════════════════════════════════════════════════
 
-// ── Claves de configuración GitHub (guardadas en localStorage por dispositivo) ──
-const GH_CFG_KEY = 'kam_gh_config';
-const GH_SYNC_KEY = 'kam_gh_sync';
-
-function ghConfig() {
-  const raw = localStorage.getItem(GH_CFG_KEY);
-  return raw ? JSON.parse(raw) : null;
-}
-function ghConfigured() {
-  const c = ghConfig();
-  return c && c.user && c.repo && c.token;
+function cargarConfigSync() {
+  const raw = localStorage.getItem(SYNC_KEY);
+  if (raw) syncConfig = { ...syncConfig, ...JSON.parse(raw) };
 }
 
-// ── Indicador de estado en sidebar ──
-function setSyncStatus(estado, msg) {
-  // estado: 'ok' | 'saving' | 'error' | 'loading' | 'none'
-  const dot = document.getElementById('sync-dot');
-  const lbl = document.getElementById('sync-label');
-  if (!dot || !lbl) return;
-  const colores = { ok:'#38A169', saving:'#D69E2E', error:'#C53030', loading:'#0097DC', none:'#718096' };
-  dot.style.background = colores[estado] || colores.none;
-  lbl.textContent = msg;
-}
-
-// ── Construir headers de la API ──
-function ghHeaders(token) {
-  return {
-    'Authorization': 'token ' + token,
-    'Accept': 'application/vnd.github+json',
-    'Content-Type': 'application/json'
-  };
-}
-
-function ghApiUrl(cfg) {
-  const branch = cfg.branch || 'main';
-  const path   = cfg.path   || 'data.json';
-  return `https://api.github.com/repos/${cfg.user}/${cfg.repo}/contents/${path}?ref=${branch}`;
-}
-
-// ── Leer data.json desde GitHub ──
-async function pullGH() {
-  const cfg = ghConfig(); if (!cfg) return null;
-  setSyncStatus('loading', 'Cargando...');
-  try {
-    const res = await fetch(ghApiUrl(cfg), { headers: ghHeaders(cfg.token) });
-    if (!res.ok) {
-      setSyncStatus('error', 'Error ' + res.status);
-      return null;
-    }
-    const meta = await res.json();
-    const content = JSON.parse(atob(meta.content.replace(/\n/g,'')));
-    // Guardar SHA para el siguiente PUT
-    const syncMeta = { sha: meta.sha, pulled: new Date().toISOString() };
-    localStorage.setItem(GH_SYNC_KEY, JSON.stringify(syncMeta));
-    setSyncStatus('ok', 'Sincronizado');
-    actualizarEstadoSync();
-    return content;
-  } catch(e) {
-    setSyncStatus('error', 'Error de red');
-    return null;
+function guardarConfigSync() {
+  syncConfig.user   = document.getElementById('sync-user').value.trim();
+  syncConfig.repo   = document.getElementById('sync-repo').value.trim();
+  syncConfig.file   = document.getElementById('sync-file').value.trim() || 'data.json';
+  syncConfig.branch = document.getElementById('sync-branch').value.trim() || 'main';
+  syncConfig.token  = document.getElementById('sync-token').value.trim();
+  if (!syncConfig.user || !syncConfig.repo || !syncConfig.token) {
+    toast('Usuario, repositorio y token son obligatorios.'); return;
   }
+  localStorage.setItem(SYNC_KEY, JSON.stringify(syncConfig));
+  setSyncIndicator('ok', 'Configurado');
+  toast('Configuración guardada en este dispositivo.');
 }
 
-// ── Escribir data.json en GitHub ──
-async function pushGH(forzar) {
-  const cfg = ghConfig(); if (!cfg) return;
-  const data = { empresas, alertas: alertasSecop, ferias, pipeline, oportunidades, catalogo: catalogoANSYS };
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-  const syncRaw = localStorage.getItem(GH_SYNC_KEY);
-  const syncMeta = syncRaw ? JSON.parse(syncRaw) : {};
-  const body = {
-    message: 'KAM sync ' + new Date().toISOString().slice(0,16).replace('T',' '),
-    content,
-    branch: cfg.branch || 'main'
-  };
-  if (syncMeta.sha) body.sha = syncMeta.sha;
+function borrarConfigSync() {
+  if (!confirm('¿Borrar las credenciales de GitHub de este dispositivo?')) return;
+  localStorage.removeItem(SYNC_KEY);
+  syncConfig = { user:'', repo:'', file:'data.json', branch:'main', token:'' };
+  ['sync-user','sync-repo','sync-token'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  setSyncIndicator('none', 'Sin configurar');
+  toast('Credenciales eliminadas.');
+}
 
-  setSyncStatus('saving', 'Guardando...');
+function syncConfigured() {
+  return !!(syncConfig.user && syncConfig.repo && syncConfig.token);
+}
+
+function setSyncIndicator(estado, texto) {
+  const el = document.getElementById('sync-indicator');
+  if (!el) return;
+  const estilos = {
+    ok:      'background:rgba(56,161,105,0.25);color:#9ae6b4',
+    saving:  'background:rgba(214,158,46,0.25);color:#faf089',
+    error:   'background:rgba(197,48,48,0.25);color:#feb2b2',
+    syncing: 'background:rgba(0,151,220,0.2);color:#90cdf4',
+    none:    'background:rgba(0,0,0,0.2);color:rgba(255,255,255,0.4)'
+  };
+  el.style.cssText = 'margin-top:8px;padding:6px 8px;border-radius:5px;font-size:10px;font-family:"IBM Plex Mono",monospace;text-align:center;' + (estilos[estado]||estilos.none);
+  el.textContent = '☁ ' + texto;
+}
+
+function githubAPIUrl() {
+  return `https://api.github.com/repos/${syncConfig.user}/${syncConfig.repo}/contents/${syncConfig.file}`;
+}
+
+function githubHeaders() {
+  return {
+    'Authorization': `Bearer ${syncConfig.token}`,
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28'
+  };
+}
+
+async function pushGitHub(manual = false) {
+  if (!syncConfigured()) {
+    if (manual) toast('Configura GitHub primero — panel Sincronización.');
+    return;
+  }
+  setSyncIndicator('saving', 'Guardando...');
+  const payload = { empresas, alertas: alertasSecop, ferias, pipeline, oportunidades, catalogo: catalogoANSYS };
+  const contenido = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 0))));
   try {
-    const res = await fetch(ghApiUrl(cfg), {
+    // Obtener SHA actual del archivo (necesario para el PUT)
+    let sha = null;
+    const getRes = await fetch(githubAPIUrl(), { headers: githubHeaders() });
+    if (getRes.ok) {
+      const getData = await getRes.json();
+      sha = getData.sha;
+    } else if (getRes.status !== 404) {
+      throw new Error('Error al leer SHA: ' + getRes.status);
+    }
+    // PUT con o sin SHA
+    const body = {
+      message: `KAM sync ${new Date().toISOString().slice(0,16).replace('T',' ')}`,
+      content: contenido,
+      branch: syncConfig.branch
+    };
+    if (sha) body.sha = sha;
+    const putRes = await fetch(githubAPIUrl(), {
       method: 'PUT',
-      headers: ghHeaders(cfg.token),
+      headers: { ...githubHeaders(), 'Content-Type': 'application/json' },
       body: JSON.stringify(body)
     });
-    if (!res.ok) {
-      const err = await res.json().catch(()=>({}));
-      // SHA obsoleto: intentar recuperarlo y reintentar una vez
-      if (res.status === 409 && !forzar) {
-        const latest = await pullGH();
-        if (latest) { await pushGH(true); } // reintentar con SHA actualizado
-        return;
-      }
-      setSyncStatus('error', 'Push fallido ' + res.status);
-      if (forzar) toast('Error al guardar en GitHub: ' + (err.message||res.status), 4000);
-      return;
+    if (!putRes.ok) {
+      const err = await putRes.json();
+      throw new Error(err.message || putRes.status);
     }
-    const result = await res.json();
-    const newSha = result.content?.sha || syncMeta.sha;
-    localStorage.setItem(GH_SYNC_KEY, JSON.stringify({ sha: newSha, pushed: new Date().toISOString(), pulled: syncMeta.pulled }));
-    setSyncStatus('ok', 'Sincronizado');
-    actualizarEstadoSync();
-    if (forzar) toast('Guardado en GitHub.');
+    setSyncIndicator('ok', 'Sincronizado');
+    if (manual) {
+      toast('Datos subidos a GitHub.');
+      const el = document.getElementById('sync-manual-result');
+      if (el) { el.innerHTML = '<div class="alert alert-success" style="margin-bottom:0">Datos subidos correctamente a GitHub.</div>'; }
+    }
   } catch(e) {
-    setSyncStatus('error', 'Error de red');
-    if (forzar) toast('Error de conexión con GitHub.', 4000);
+    setSyncIndicator('error', 'Error sync');
+    if (manual) toast('Error al subir: ' + e.message, 4000);
+    console.error('GitHub push error:', e);
   }
 }
 
-// ── Actualizar panel de estado ──
-function actualizarEstadoSync() {
-  const syncRaw = localStorage.getItem(GH_SYNC_KEY);
-  const s = syncRaw ? JSON.parse(syncRaw) : {};
-  const fmt = iso => iso ? new Date(iso).toLocaleString('es-CO',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—';
-  const elPush = document.getElementById('gh-ultimo-push');
-  const elPull = document.getElementById('gh-ultimo-pull');
-  const elCount = document.getElementById('gh-repo-count');
-  if (elPush) elPush.textContent = fmt(s.pushed);
-  if (elPull) elPull.textContent = fmt(s.pulled);
-  if (elCount) elCount.textContent = empresas.length + ' empresas';
-}
-
-// ── Guardar config y precargar campos ──
-function guardarConfigGH() {
-  const user   = document.getElementById('gh-user').value.trim();
-  const repo   = document.getElementById('gh-repo').value.trim();
-  const token  = document.getElementById('gh-token').value.trim();
-  const branch = document.getElementById('gh-branch').value.trim() || 'main';
-  const path   = document.getElementById('gh-path').value.trim()   || 'data.json';
-  if (!user || !repo || !token) { toast('Usuario, repositorio y token son obligatorios.'); return; }
-  localStorage.setItem(GH_CFG_KEY, JSON.stringify({ user, repo, token, branch, path }));
-  toast('Configuración guardada en este dispositivo.');
-  setSyncStatus('ok', 'Configurado');
-}
-
-function cargarConfigEnForm() {
-  const cfg = ghConfig(); if (!cfg) return;
-  const set = (id, val) => { const el=document.getElementById(id); if(el) el.value=val||''; };
-  set('gh-user',   cfg.user);
-  set('gh-repo',   cfg.repo);
-  set('gh-token',  cfg.token);
-  set('gh-branch', cfg.branch||'main');
-  set('gh-path',   cfg.path||'data.json');
-}
-
-async function probarConexionGH() {
-  const cfg = ghConfig();
-  if (!cfg) { toast('Guarda la configuración primero.'); return; }
-  // Leer config del form primero (puede no estar guardada aún)
-  const user   = document.getElementById('gh-user').value.trim()   || cfg.user;
-  const repo   = document.getElementById('gh-repo').value.trim()   || cfg.repo;
-  const token  = document.getElementById('gh-token').value.trim()  || cfg.token;
-  const branch = document.getElementById('gh-branch').value.trim() || cfg.branch || 'main';
-  const path   = document.getElementById('gh-path').value.trim()   || cfg.path   || 'data.json';
-  const resultDiv = document.getElementById('gh-test-result');
-  resultDiv.style.display = 'block';
-  resultDiv.innerHTML = '<div class="alert alert-info"><span>⟳</span><div>Probando conexión...</div></div>';
+async function pullGitHub(manual = false) {
+  if (!syncConfigured()) {
+    if (manual) toast('Configura GitHub primero — panel Sincronización.');
+    return false;
+  }
+  setSyncIndicator('syncing', 'Descargando...');
   try {
-    const url = `https://api.github.com/repos/${user}/${repo}/contents/${path}?ref=${branch}`;
-    const res = await fetch(url, { headers: ghHeaders(token) });
-    if (res.ok) {
-      const meta = await res.json();
-      const kb = Math.round(meta.size/1024*10)/10;
-      resultDiv.innerHTML = `<div class="alert alert-success"><span>✓</span><div>Conexión exitosa. Archivo <strong>${path}</strong> encontrado — ${kb} KB, SHA: <code style="font-family:'IBM Plex Mono',monospace;font-size:11px">${meta.sha.slice(0,8)}</code></div></div>`;
-      // Guardar SHA
-      const syncRaw = localStorage.getItem(GH_SYNC_KEY);
-      const syncMeta = syncRaw ? JSON.parse(syncRaw) : {};
-      localStorage.setItem(GH_SYNC_KEY, JSON.stringify({...syncMeta, sha: meta.sha}));
-    } else if (res.status === 404) {
-      resultDiv.innerHTML = `<div class="alert alert-warn"><span>⚠</span><div>Repositorio o archivo no encontrado. Verifica usuario (<strong>${user}</strong>), repo (<strong>${repo}</strong>) y ruta (<strong>${path}</strong>).</div></div>`;
-    } else if (res.status === 401) {
-      resultDiv.innerHTML = `<div class="alert alert-warn"><span>⚠</span><div>Token inválido o sin permisos. Verifica el token y que tenga scope <strong>Contents: Read and write</strong>.</div></div>`;
-    } else {
-      resultDiv.innerHTML = `<div class="alert alert-warn"><span>⚠</span><div>Error HTTP ${res.status}.</div></div>`;
+    const res = await fetch(githubAPIUrl() + '?ref=' + syncConfig.branch, { headers: githubHeaders() });
+    if (!res.ok) {
+      if (res.status === 404) {
+        setSyncIndicator('ok', 'Sin datos remotos');
+        if (manual) toast('El archivo no existe aún en GitHub. Sube los datos primero.', 4000);
+        return false;
+      }
+      throw new Error('HTTP ' + res.status);
     }
+    const data = await res.json();
+    const decoded = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
+    const d = JSON.parse(decoded);
+    empresas       = d.empresas  || [];
+    alertasSecop   = d.alertas   || [];
+    ferias         = d.ferias    || [];
+    pipeline       = d.pipeline  || [];
+    oportunidades  = d.oportunidades || [];
+    catalogoANSYS  = d.catalogo  || JSON.parse(JSON.stringify(CATALOGO_DEFAULT));
+    migrarContactosLegacy();
+    // Guardar en localStorage como caché local
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
+    actualizarSidebar();
+    actualizarDashboard();
+    setSyncIndicator('ok', 'Sincronizado');
+    if (manual) {
+      toast('Datos descargados desde GitHub.');
+      const el = document.getElementById('sync-manual-result');
+      if (el) { el.innerHTML = `<div class="alert alert-success" style="margin-bottom:0">Descargados ${empresas.length} empresas, ${oportunidades.length} oportunidades.</div>`; }
+    }
+    return true;
   } catch(e) {
-    resultDiv.innerHTML = `<div class="alert alert-warn"><span>⚠</span><div>Error de red: ${e.message}</div></div>`;
+    setSyncIndicator('error', 'Error sync');
+    if (manual) toast('Error al descargar: ' + e.message, 4000);
+    console.error('GitHub pull error:', e);
+    return false;
   }
 }
 
-async function sincronizarDesdeGH() {
-  if (!ghConfigured()) { toast('Configura GitHub primero.'); return; }
-  const data = await pullGH();
-  if (!data) { toast('No se pudo cargar desde GitHub.', 4000); return; }
-  empresas       = data.empresas       || [];
-  alertasSecop   = data.alertas        || [];
-  ferias         = data.ferias         || [];
-  pipeline       = data.pipeline       || [];
-  oportunidades  = data.oportunidades  || [];
-  catalogoANSYS  = data.catalogo       || JSON.parse(JSON.stringify(CATALOGO_DEFAULT));
-  migrarContactosLegacy();
-  // Guardar en localStorage como caché local
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  actualizarSidebar();
-  actualizarDashboard();
-  toast('Datos cargados desde GitHub — ' + empresas.length + ' empresas.');
+async function probarConexion() {
+  syncConfig.user   = document.getElementById('sync-user').value.trim();
+  syncConfig.repo   = document.getElementById('sync-repo').value.trim();
+  syncConfig.token  = document.getElementById('sync-token').value.trim();
+  syncConfig.branch = document.getElementById('sync-branch').value.trim() || 'main';
+  syncConfig.file   = document.getElementById('sync-file').value.trim() || 'data.json';
+  const el = document.getElementById('sync-test-result');
+  el.style.display = 'block';
+  el.innerHTML = '<div class="alert alert-info" style="margin-bottom:0">Probando conexión...</div>';
+  try {
+    const res = await fetch(`https://api.github.com/repos/${syncConfig.user}/${syncConfig.repo}`, { headers: githubHeaders() });
+    if (res.ok) {
+      const d = await res.json();
+      el.innerHTML = `<div class="alert alert-success" style="margin-bottom:0">Repositorio encontrado: <strong>${d.full_name}</strong>${d.private?' (privado)':' (público)'}. Conexión OK.</div>`;
+    } else if (res.status === 401) {
+      el.innerHTML = '<div class="alert alert-warn" style="margin-bottom:0">Token inválido o vencido. Verifica el PAT.</div>';
+    } else if (res.status === 404) {
+      el.innerHTML = '<div class="alert alert-warn" style="margin-bottom:0">Repositorio no encontrado. Verifica usuario y nombre.</div>';
+    } else {
+      el.innerHTML = `<div class="alert alert-warn" style="margin-bottom:0">Error HTTP ${res.status}.</div>`;
+    }
+  } catch(e) {
+    el.innerHTML = `<div class="alert alert-warn" style="margin-bottom:0">Error de red: ${e.message}</div>`;
+  }
 }
 
-// ── cargarDatos: localStorage primero, luego intenta GitHub en segundo plano ──
+// ══════════════════════════════════════════════════════
+// PERSISTENCIA
+// ══════════════════════════════════════════════════════
+
 function cargarDatos() {
+  // 1. Cargar config de sync
+  cargarConfigSync();
+  // 2. Intentar desde localStorage (caché) inmediatamente para no bloquear la UI
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) {
     const v1 = localStorage.getItem('kam_techbrand_v1');
@@ -1500,49 +1541,38 @@ function cargarDatos() {
   }
   if (raw) {
     const d = JSON.parse(raw);
-    empresas       = d.empresas       || [];
-    alertasSecop   = d.alertas        || [];
-    ferias         = d.ferias         || [];
-    pipeline       = d.pipeline       || [];
-    oportunidades  = d.oportunidades  || [];
-    catalogoANSYS  = d.catalogo       || JSON.parse(JSON.stringify(CATALOGO_DEFAULT));
+    empresas = d.empresas || []; alertasSecop = d.alertas || [];
+    ferias = d.ferias || []; pipeline = d.pipeline || [];
+    oportunidades = d.oportunidades || [];
+    catalogoANSYS = d.catalogo || JSON.parse(JSON.stringify(CATALOGO_DEFAULT));
     migrarContactosLegacy();
   }
-  // Después de cargar local, sincronizar desde GitHub en segundo plano
-  if (ghConfigured()) {
-    setSyncStatus('loading', 'Sincronizando...');
-    pullGH().then(data => {
-      if (!data) return;
-      // Solo actualizar si GitHub tiene más empresas (evitar sobreescribir trabajo local)
-      const ghCount = (data.empresas||[]).length;
-      const localCount = empresas.length;
-      if (ghCount >= localCount) {
-        empresas       = data.empresas       || [];
-        alertasSecop   = data.alertas        || [];
-        ferias         = data.ferias         || [];
-        pipeline       = data.pipeline       || [];
-        oportunidades  = data.oportunidades  || [];
-        catalogoANSYS  = data.catalogo       || JSON.parse(JSON.stringify(CATALOGO_DEFAULT));
-        migrarContactosLegacy();
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-        actualizarSidebar();
-        actualizarDashboard();
-        if (document.getElementById('panel-mapa').classList.contains('active')) renderMapa();
+  // 3. Si hay sync configurado, intentar pull en background (sin bloquear)
+  if (syncConfigured()) {
+    setSyncIndicator('syncing', 'Sincronizando...');
+    pullGitHub(false).then(ok => {
+      if (ok) {
+        // Refrescar panel activo si es necesario
+        const activePanel = document.querySelector('.panel.active');
+        if (activePanel?.id === 'panel-dashboard') actualizarDashboard();
+        if (activePanel?.id === 'panel-mapa') renderMapa();
+        if (activePanel?.id === 'panel-oportunidades') renderOportunidades();
+      } else if (!raw) {
+        setSyncIndicator('none', 'Sin datos');
       }
     });
   } else {
-    setSyncStatus('none', 'Sin configurar');
+    setSyncIndicator('none', 'Sin configurar');
   }
 }
 
-// ── guardarDatos: localStorage + push async a GitHub ──
 function guardarDatos() {
-  const data = { empresas, alertas: alertasSecop, ferias, pipeline, oportunidades, catalogo: catalogoANSYS };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  // Siempre guardar en localStorage primero (instantáneo)
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({ empresas, alertas: alertasSecop, ferias, pipeline, oportunidades, catalogo: catalogoANSYS }));
   const now = new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('save-indicator').textContent = 'Guardado ' + now;
-  // Push asíncrono a GitHub si está configurado
-  if (ghConfigured()) pushGH(false);
+  // Luego sync a GitHub en background (no bloquea)
+  if (syncConfigured()) pushGitHub(false);
 }
 
 function migrarContactosLegacy() {
@@ -1572,15 +1602,15 @@ const PANEL_TITLES = {
   mapageo:'Mapa Geográfico', importar:'Importar CSV', secop:'SECOP II',
   oportunidades:'Oportunidades', ferias:'Ferias y Eventos',
   pipeline:'Pipeline Post-Feria', reporte:'Reporte Lima',
-  catalogo:'Catálogo ANSYS', sincronizacion:'Sincronización GitHub'
+  catalogo:'Catálogo ANSYS', sync:'Sincronización GitHub'
 };
 
 function switchPanel(id, el) {
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('panel-'+id).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  if (el) el.classList.add('active');
-  document.getElementById('topbar-title').textContent = PANEL_TITLES[id] || id;
+  el.classList.add('active');
+  document.getElementById('topbar-title').textContent = PANEL_TITLES[id];
   if (id==='dashboard') actualizarDashboard();
   if (id==='mapa') renderMapa();
   if (id==='mapageo') iniciarMapaGeo();
@@ -1590,7 +1620,7 @@ function switchPanel(id, el) {
   if (id==='oportunidades') renderOportunidades();
   if (id==='reporte') generarReporte();
   if (id==='catalogo') renderCatalogo();
-  if (id==='sincronizacion') { cargarConfigEnForm(); actualizarEstadoSync(); }
+  if (id==='sync') poblarFormSync();
 }
 
 function irARegistrar() {
@@ -1642,7 +1672,7 @@ function actualizarDashboard() {
   document.getElementById('d-f3').textContent = `${opActivas.length} / 8`;
   document.getElementById('d-bar-f3').style.width = Math.min(100,Math.round(opActivas.length/8*100))+'%';
 
-  const sectores = ['Minería','Oil & Gas','Energía','Manufactura Avanzada','Consultoría de Ingeniería'];
+  const sectores = ['Aeroespacial','Alta Tecnología y Electrónica','Automotriz y Movilidad','Bienes de Consumo','Construcción e Infraestructura','Defensa y Seguridad','Energía y Recursos Naturales','Equipos Industriales y Minería','Espacial','Materiales y Química','Oil & Gas','Salud y Ciencias de la Vida','Deportes y Biomecánica'];
   document.getElementById('d-sectores').innerHTML = sectores.map(s=>{
     const n = empresas.filter(e=>e.sector===s).length;
     return `<div class="stat-card" style="padding:12px"><div class="stat-label" style="font-size:10px">${s}</div><div class="stat-val" style="font-size:22px">${n}</div></div>`;
@@ -1697,9 +1727,14 @@ function guardarEmpresa() {
   const contactos = cnombre ? [{
     id: Date.now(), nombre:cnombre, cargo:document.getElementById('r-ccargo').value.trim(),
     rol:document.getElementById('r-crol').value||'Decisor técnico',
+    ciudad:document.getElementById('r-cciudad').value.trim(),
     correo:document.getElementById('r-ccorreo').value.trim(),
     telefono:document.getElementById('r-ctelefono').value.trim(),
-    linkedin:document.getElementById('r-clinkedin').value.trim()
+    whatsapp:document.getElementById('r-cwhatsapp').value.trim(),
+    linkedin:document.getElementById('r-clinkedin').value.trim(),
+    x:document.getElementById('r-cx').value.trim(),
+    wechat:document.getElementById('r-cwechat').value.trim(),
+    canalPreferido:document.getElementById('r-ccanal').value
   }] : [];
   const empresa = {
     id: Date.now(), razon,
@@ -1713,6 +1748,14 @@ function guardarEmpresa() {
     rep:document.getElementById('r-rep').value.trim(),
     web:document.getElementById('r-web').value.trim(),
     telempresa:document.getElementById('r-telempresa').value.trim(),
+    sLinkedin:document.getElementById('r-s-linkedin').value.trim(),
+    sYoutube:document.getElementById('r-s-youtube').value.trim(),
+    sFacebook:document.getElementById('r-s-facebook').value.trim(),
+    sInstagram:document.getElementById('r-s-instagram').value.trim(),
+    sX:document.getElementById('r-s-x').value.trim(),
+    sWhatsapp:document.getElementById('r-s-whatsapp').value.trim(),
+    sWechat:document.getElementById('r-s-wechat').value.trim(),
+    sOtra:document.getElementById('r-s-otra').value.trim(),
     cat:document.getElementById('r-cat').value||'B',
     esss:document.getElementById('r-esss').value||'No',
     origen:document.getElementById('r-origen').value||'RUES',
@@ -1740,8 +1783,9 @@ function guardarEmpresa() {
 
 function limpiarRUES() {
   ['r-razon','r-nit','r-ciiu','r-municipio','r-activos','r-rep','r-web','r-telempresa',
-   'r-cnombre','r-ccargo','r-ccorreo','r-ctelefono','r-clinkedin','r-hipotesis','r-casouso',
-   'r-notas','r-canal-especifico','r-accion','r-accion-fecha'].forEach(id=>{
+   'r-s-linkedin','r-s-youtube','r-s-facebook','r-s-instagram','r-s-x','r-s-whatsapp','r-s-wechat','r-s-otra',
+   'r-cnombre','r-ccargo','r-cciudad','r-ccorreo','r-ctelefono','r-cwhatsapp','r-clinkedin','r-cx','r-cwechat',
+   'r-hipotesis','r-casouso','r-notas','r-canal-especifico','r-accion','r-accion-fecha'].forEach(id=>{
     const el=document.getElementById(id); if(el) el.value='';
   });
   ['r-sector','r-depto','r-tamano'].forEach(id=>document.getElementById(id).selectedIndex=0);
@@ -1750,6 +1794,7 @@ function limpiarRUES() {
   document.getElementById('r-origen').value='RUES';
   document.getElementById('r-feria-origen').value='';
   document.getElementById('r-crol').value='Decisor técnico';
+  document.getElementById('r-ccanal').value='';
   document.getElementById('r-feria-origen-group').style.display='none';
   limpiarLogoRUES();
 }
@@ -1774,7 +1819,10 @@ function cargarLogoRUES(input) {
       const c=document.createElement('canvas');
       const r=Math.min(120/img.width,60/img.height);
       c.width=Math.round(img.width*r); c.height=Math.round(img.height*r);
-      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      const ctx=c.getContext('2d');
+      ctx.fillStyle='#ffffff';
+      ctx.fillRect(0,0,c.width,c.height);
+      ctx.drawImage(img,0,0,c.width,c.height);
       window._logoBase64=c.toDataURL('image/jpeg',0.6);
       const p=document.getElementById('r-logo-preview');
       p.innerHTML=`<img src="${window._logoBase64}" class="empresa-logo">`;
@@ -1797,7 +1845,10 @@ function cargarLogoModal(input,empIdx) {
       const c=document.createElement('canvas');
       const r=Math.min(120/img.width,60/img.height);
       c.width=Math.round(img.width*r); c.height=Math.round(img.height*r);
-      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      const ctx=c.getContext('2d');
+      ctx.fillStyle='#ffffff';
+      ctx.fillRect(0,0,c.width,c.height);
+      ctx.drawImage(img,0,0,c.width,c.height);
       const b64=c.toDataURL('image/jpeg',0.6);
       empresas[empIdx].logo=b64; guardarDatos();
       const p=document.getElementById('modal-logo-preview');
@@ -1995,23 +2046,37 @@ function renderDrawerFicha(idx) {
         <span class="drawer-contacto-nombre">${c.nombre||'Sin nombre'}</span>
         <span class="contacto-rol-badge ${rolClass(c.rol)}">${c.rol||''}</span>
       </div>
-      <div class="drawer-contacto-cargo">${c.cargo||''}</div>
+      <div class="drawer-contacto-cargo">${c.cargo||''}${c.ciudad?` <span style="color:var(--gris-dark);font-size:11px">· ${c.ciudad}</span>`:''}</div>
+      ${c.canalPreferido?`<div style="font-size:10px;color:var(--azul-med);font-weight:600;margin-top:2px">Canal preferido: ${c.canalPreferido}</div>`:''}
       <div class="drawer-contacto-actions">
         ${c.correo?`<a href="mailto:${c.correo}" class="drawer-action-btn email" onclick="event.stopPropagation()">✉ ${c.correo}</a>`:''}
         ${c.telefono?`<a href="tel:${c.telefono.replace(/\s/g,'')}" class="drawer-action-btn tel" onclick="event.stopPropagation()">📞 ${c.telefono}</a>`:''}
+        ${(c.whatsapp||c.telefono)?`<a href="https://wa.me/${(c.whatsapp||c.telefono).replace(/[^0-9+]/g,'')}" target="_blank" class="drawer-action-btn tel" onclick="event.stopPropagation()">💬 WhatsApp</a>`:''}
         ${liUrl?`<a href="${liUrl}" target="_blank" class="drawer-action-btn li" onclick="event.stopPropagation()">in LinkedIn</a>`:''}
+        ${c.x?(()=>{let u=c.x;if(!u.startsWith('http'))u='https://'+u;return`<a href="${u}" target="_blank" class="drawer-action-btn" onclick="event.stopPropagation()">𝕏 X</a>`;})():''}
+        ${c.wechat?`<span class="drawer-action-btn" style="cursor:default">WeChat: ${c.wechat}</span>`:''}
       </div>
     </div>`;
   });
   html+=`</div>`;
 
-  // Acceso empresa
+  // Acceso empresa + redes sociales
   const webUrl=(()=>{let u=e.web||'';return u&&!u.startsWith('http')?'https://'+u:u;})();
-  if(webUrl||e.telempresa) {
-    html+=`<div class="drawer-section"><div class="drawer-section-title">Acceso empresa</div>
-      <div class="drawer-contacto-actions">
-        ${webUrl?`<a href="${webUrl}" target="_blank" class="drawer-action-btn" onclick="event.stopPropagation()">🌐 Sitio web</a>`:''}
+  const tieneAcceso=webUrl||e.telempresa||e.sLinkedin||e.sYoutube||e.sFacebook||e.sInstagram||e.sX||e.sWhatsapp||e.sWechat||e.sOtra;
+  if(tieneAcceso) {
+    const sUrl=(u)=>u&&!u.startsWith('http')?'https://'+u:u;
+    html+=`<div class="drawer-section"><div class="drawer-section-title">Acceso y redes sociales</div>
+      <div class="drawer-contacto-actions" style="flex-wrap:wrap">
+        ${webUrl?`<a href="${webUrl}" target="_blank" class="drawer-action-btn" onclick="event.stopPropagation()">🌐 Web</a>`:''}
         ${e.telempresa?`<a href="tel:${e.telempresa.replace(/\s/g,'')}" class="drawer-action-btn tel" onclick="event.stopPropagation()">📞 ${e.telempresa}</a>`:''}
+        ${e.sLinkedin?`<a href="${sUrl(e.sLinkedin)}" target="_blank" class="drawer-action-btn li" onclick="event.stopPropagation()">in LinkedIn</a>`:''}
+        ${e.sYoutube?`<a href="${sUrl(e.sYoutube)}" target="_blank" class="drawer-action-btn" onclick="event.stopPropagation()">▶ YouTube</a>`:''}
+        ${e.sFacebook?`<a href="${sUrl(e.sFacebook)}" target="_blank" class="drawer-action-btn" onclick="event.stopPropagation()">f Facebook</a>`:''}
+        ${e.sInstagram?`<a href="${sUrl(e.sInstagram)}" target="_blank" class="drawer-action-btn" onclick="event.stopPropagation()">◎ Instagram</a>`:''}
+        ${e.sX?`<a href="${sUrl(e.sX)}" target="_blank" class="drawer-action-btn" onclick="event.stopPropagation()">𝕏 X</a>`:''}
+        ${e.sWhatsapp?`<a href="https://wa.me/${e.sWhatsapp.replace(/[^0-9+]/g,'')}" target="_blank" class="drawer-action-btn tel" onclick="event.stopPropagation()">💬 WhatsApp Biz</a>`:''}
+        ${e.sWechat?`<span class="drawer-action-btn" style="cursor:default">WeChat: ${e.sWechat}</span>`:''}
+        ${e.sOtra?`<span class="drawer-action-btn" style="cursor:default">◆ ${e.sOtra}</span>`:''}
       </div></div>`;
   }
 
@@ -2140,7 +2205,9 @@ function registrarActividadRapida() {
 
 function abrirEdicionDesdeDrawer() {
   if(drawerIdx===null) return;
-  cerrarDrawer(); abrirEdicion(drawerIdx);
+  const idx = drawerIdx;
+  cerrarDrawer();
+  abrirEdicion(idx);
 }
 
 // ══════════════════════════════════════════════════════
@@ -2166,7 +2233,7 @@ function renderContactosModal(idx) {
           <span class="contacto-nombre">${c.nombre||'Sin nombre'}</span>
           <span class="contacto-rol-badge ${rolClass(c.rol)}">${c.rol||'—'}</span>
         </div>
-        <div class="contacto-cargo">${c.cargo||''}</div>
+        <div class="contacto-cargo">${c.cargo||''}${c.ciudad?' · '+c.ciudad:''}</div>
         <div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px">
           <div><label class="form-label" style="font-size:10px">Nombre</label><input class="form-control" style="font-size:12px;padding:5px 8px" value="${esc(c.nombre)}" onchange="updateContacto(${idx},${ci},'nombre',this.value)"></div>
           <div><label class="form-label" style="font-size:10px">Cargo</label><input class="form-control" style="font-size:12px;padding:5px 8px" value="${esc(c.cargo)}" onchange="updateContacto(${idx},${ci},'cargo',this.value)"></div>
@@ -2175,9 +2242,19 @@ function renderContactosModal(idx) {
               ${['Decisor técnico','Decisor económico','Influenciador','Bloqueador','Referente interno'].map(r=>`<option ${c.rol===r?'selected':''}>${r}</option>`).join('')}
             </select>
           </div>
+          <div><label class="form-label" style="font-size:10px">Ciudad</label><input class="form-control" style="font-size:12px;padding:5px 8px" value="${esc(c.ciudad||'')}" placeholder="Medellín, Bogotá..." onchange="updateContacto(${idx},${ci},'ciudad',this.value)"></div>
           <div><label class="form-label" style="font-size:10px">Correo</label><input class="form-control" style="font-size:12px;padding:5px 8px" value="${esc(c.correo)}" onchange="updateContacto(${idx},${ci},'correo',this.value)"></div>
           <div><label class="form-label" style="font-size:10px">Teléfono</label><input class="form-control" style="font-size:12px;padding:5px 8px" value="${esc(c.telefono)}" onchange="updateContacto(${idx},${ci},'telefono',this.value)"></div>
+          <div><label class="form-label" style="font-size:10px">WhatsApp</label><input class="form-control" style="font-size:12px;padding:5px 8px" value="${esc(c.whatsapp||'')}" placeholder="+57 300..." onchange="updateContacto(${idx},${ci},'whatsapp',this.value)"></div>
+          <div><label class="form-label" style="font-size:10px">Canal preferido</label>
+            <select class="form-control" style="font-size:12px;padding:5px 8px" onchange="updateContacto(${idx},${ci},'canalPreferido',this.value)">
+              <option value="">—</option>
+              ${['WhatsApp','Email','Llamada','LinkedIn','WeChat'].map(ch=>`<option ${(c.canalPreferido||'')===ch?'selected':''}>${ch}</option>`).join('')}
+            </select>
+          </div>
           <div><label class="form-label" style="font-size:10px">LinkedIn</label><input class="form-control" style="font-size:12px;padding:5px 8px" value="${esc(c.linkedin)}" onchange="updateContacto(${idx},${ci},'linkedin',this.value)"></div>
+          <div><label class="form-label" style="font-size:10px">X (Twitter)</label><input class="form-control" style="font-size:12px;padding:5px 8px" value="${esc(c.x||'')}" placeholder="https://x.com/..." onchange="updateContacto(${idx},${ci},'x',this.value)"></div>
+          <div><label class="form-label" style="font-size:10px">WeChat</label><input class="form-control" style="font-size:12px;padding:5px 8px" value="${esc(c.wechat||'')}" placeholder="ID WeChat" onchange="updateContacto(${idx},${ci},'wechat',this.value)"></div>
         </div>
       </div>`).join('');
   return `${lista}
@@ -2189,9 +2266,13 @@ function renderContactosModal(idx) {
         <div class="form-group"><label class="form-label" style="font-size:10px">Rol</label>
           <select class="form-control" id="nc-rol"><option>Decisor técnico</option><option>Decisor económico</option><option>Influenciador</option><option>Bloqueador</option><option>Referente interno</option></select>
         </div>
+        <div class="form-group"><label class="form-label" style="font-size:10px">Ciudad</label><input class="form-control" id="nc-ciudad" placeholder="Medellín, Bogotá..."></div>
         <div class="form-group"><label class="form-label" style="font-size:10px">Correo</label><input class="form-control" id="nc-correo" type="email" placeholder="correo@empresa.com"></div>
         <div class="form-group"><label class="form-label" style="font-size:10px">Teléfono</label><input class="form-control" id="nc-telefono" placeholder="+57 300..."></div>
+        <div class="form-group"><label class="form-label" style="font-size:10px">WhatsApp</label><input class="form-control" id="nc-whatsapp" placeholder="+57 300..."></div>
         <div class="form-group"><label class="form-label" style="font-size:10px">LinkedIn</label><input class="form-control" id="nc-linkedin" placeholder="linkedin.com/in/..."></div>
+        <div class="form-group"><label class="form-label" style="font-size:10px">X (Twitter)</label><input class="form-control" id="nc-x" placeholder="https://x.com/..."></div>
+        <div class="form-group"><label class="form-label" style="font-size:10px">WeChat</label><input class="form-control" id="nc-wechat" placeholder="ID WeChat"></div>
       </div>
       <button class="btn btn-primary btn-sm" style="margin-top:10px" onclick="agregarContacto(${idx})">Agregar contacto</button>
     </div>`;
@@ -2213,9 +2294,17 @@ function agregarContacto(empIdx){
   if(!nombre){toast('El nombre es obligatorio.');return;}
   if(!empresas[empIdx].contactos) empresas[empIdx].contactos=[];
   empresas[empIdx].contactos.push({
-    id:Date.now(),nombre,cargo:document.getElementById('nc-cargo').value.trim(),
-    rol:document.getElementById('nc-rol').value,correo:document.getElementById('nc-correo').value.trim(),
-    telefono:document.getElementById('nc-telefono').value.trim(),linkedin:document.getElementById('nc-linkedin').value.trim()
+    id:Date.now(),nombre,
+    cargo:document.getElementById('nc-cargo').value.trim(),
+    rol:document.getElementById('nc-rol').value,
+    ciudad:document.getElementById('nc-ciudad').value.trim(),
+    correo:document.getElementById('nc-correo').value.trim(),
+    telefono:document.getElementById('nc-telefono').value.trim(),
+    whatsapp:document.getElementById('nc-whatsapp').value.trim(),
+    linkedin:document.getElementById('nc-linkedin').value.trim(),
+    x:document.getElementById('nc-x').value.trim(),
+    wechat:document.getElementById('nc-wechat').value.trim(),
+    canalPreferido:''
   });
   sincronizarLegacy(empIdx); guardarDatos();
   document.getElementById('modal-contactos').innerHTML=renderContactosModal(empIdx);
@@ -2239,7 +2328,7 @@ function abrirEdicion(idx){
       <div class="form-group"><label class="form-label">CIIU</label><input class="form-control" id="e-ciiu" value="${esc(e.ciiu)}"></div>
       <div class="form-group"><label class="form-label">Sector</label>
         <select class="form-control" id="e-sector">
-          ${['Minería','Oil & Gas','Energía','Manufactura Avanzada','Consultoría de Ingeniería','Autopartes','Construcción / Infraestructura'].map(s=>`<option ${e.sector===s?'selected':''}>${s}</option>`).join('')}
+          ${['Aeroespacial','Alta Tecnología y Electrónica','Automotriz y Movilidad','Bienes de Consumo','Construcción e Infraestructura','Defensa y Seguridad','Energía y Recursos Naturales','Equipos Industriales y Minería','Espacial','Materiales y Química','Oil & Gas','Salud y Ciencias de la Vida','Deportes y Biomecánica'].map(s=>`<option ${e.sector===s?'selected':''}>${s}</option>`).join('')}
         </select>
       </div>
       <div class="form-group"><label class="form-label">Departamento</label><input class="form-control" id="e-depto" value="${esc(e.depto)}"></div>
@@ -2285,6 +2374,18 @@ function abrirEdicion(idx){
       </div>
     </div>
     <hr class="section-hr">
+    <div class="section-title">Redes sociales de la empresa</div>
+    <div class="form-grid" style="margin-bottom:16px">
+      <div class="form-group"><label class="form-label">LinkedIn empresa</label><input class="form-control" id="e-s-linkedin" value="${esc(e.sLinkedin||'')}" placeholder="https://linkedin.com/company/..."></div>
+      <div class="form-group"><label class="form-label">YouTube</label><input class="form-control" id="e-s-youtube" value="${esc(e.sYoutube||'')}" placeholder="https://youtube.com/@..."></div>
+      <div class="form-group"><label class="form-label">Facebook</label><input class="form-control" id="e-s-facebook" value="${esc(e.sFacebook||'')}" placeholder="https://facebook.com/..."></div>
+      <div class="form-group"><label class="form-label">Instagram</label><input class="form-control" id="e-s-instagram" value="${esc(e.sInstagram||'')}" placeholder="https://instagram.com/..."></div>
+      <div class="form-group"><label class="form-label">X (Twitter)</label><input class="form-control" id="e-s-x" value="${esc(e.sX||'')}" placeholder="https://x.com/..."></div>
+      <div class="form-group"><label class="form-label">WhatsApp Business</label><input class="form-control" id="e-s-whatsapp" value="${esc(e.sWhatsapp||'')}" placeholder="+57 300 000 0000"></div>
+      <div class="form-group"><label class="form-label">WeChat</label><input class="form-control" id="e-s-wechat" value="${esc(e.sWechat||'')}" placeholder="ID de WeChat"></div>
+      <div class="form-group"><label class="form-label">Otra red / plataforma</label><input class="form-control" id="e-s-otra" value="${esc(e.sOtra||'')}" placeholder="ej: Telegram, TikTok, etc."></div>
+    </div>
+    <hr class="section-hr">
     <div class="section-title">Próxima acción</div>
     <div class="form-grid" style="margin-bottom:16px">
       <div class="form-group"><label class="form-label">Acción</label><input class="form-control" id="e-accion" value="${esc(e.accion||'')}" placeholder="ej: Llamar para agendar demo"></div>
@@ -2317,6 +2418,14 @@ function guardarEdicion(){
   e.rep=document.getElementById('e-rep').value.trim();
   e.web=document.getElementById('e-web').value.trim();
   e.telempresa=document.getElementById('e-telempresa').value.trim();
+  e.sLinkedin=document.getElementById('e-s-linkedin').value.trim();
+  e.sYoutube=document.getElementById('e-s-youtube').value.trim();
+  e.sFacebook=document.getElementById('e-s-facebook').value.trim();
+  e.sInstagram=document.getElementById('e-s-instagram').value.trim();
+  e.sX=document.getElementById('e-s-x').value.trim();
+  e.sWhatsapp=document.getElementById('e-s-whatsapp').value.trim();
+  e.sWechat=document.getElementById('e-s-wechat').value.trim();
+  e.sOtra=document.getElementById('e-s-otra').value.trim();
   e.cat=document.getElementById('e-cat').value;
   e.esss=document.getElementById('e-esss').value;
   e.origen=document.getElementById('e-origen').value;
@@ -2661,54 +2770,158 @@ function parseCSV(text){
   });
 }
 
-function procesarCSV(input,tipo){
-  const file=input.files[0]; if(!file) return;
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    const rows=parseCSV(ev.target.result);
-    let procesadas=[];
-    if(tipo==='nativo'){
-      procesadas=rows.map(r=>({
-        razon:r['Razón Social']||r['Razon Social']||'',nit:r['NIT']||'',ciiu:r['CIIU']||'',
-        sector:r['Sector']||'',depto:r['Departamento']||'',municipio:r['Municipio']||'',
-        tamano:r['Tamaño']||r['Tamano']||'',activos:r['Activos']||'',rep:r['Rep. Legal']||'',
-        web:r['Sitio Web']||r['Web']||'',telempresa:r['Teléfono Empresa']||'',
-        cat:r['Categoría KAM']||r['Categoria KAM']||'B',estado:r['Estado']||'Nuevo',
-        cnombre:r['Nombre contacto']||'',ccargo:r['Cargo']||'',ccorreo:r['Correo corporativo']||'',
-        ctelefono:r['Teléfono Contacto']||'',clinkedin:r['LinkedIn URL']||'',
-        hipotesis:r['Hipótesis módulo ANSYS']||r['Hipotesis modulo ANSYS']||'',
-        accion:r['Próxima acción']||'',accionFecha:r['Fecha acción']||'',
-        notas:r['Notas']||'',fuente:r['Fuente']||'CSV nativo',fecha:r['Fecha']||new Date().toLocaleDateString('es-CO')
-      })).filter(r=>r.razon);
-    } else if(tipo==='apollo'){
-      procesadas=rows.map(r=>({
-        razon:r['Company']||r['company']||'',
-        cnombre:((r['First Name']||r['first_name']||'')+' '+(r['Last Name']||r['last_name']||'')).trim(),
-        ccargo:r['Title']||r['title']||'',ccorreo:r['Email']||r['email']||'',
-        ctelefono:r['Phone']||r['phone']||'',municipio:r['City']||r['city']||'',
-        clinkedin:r['LinkedIn Url']||r['linkedin_url']||'',
-        fuente:'Apollo.io',cat:'B',estado:'Nuevo',fecha:new Date().toLocaleDateString('es-CO')
-      })).filter(r=>r.razon);
-    } else if(tipo==='linkedin'){
-      procesadas=rows.map(r=>({
-        razon:r['Company']||r['company']||'',
-        cnombre:((r['First Name']||'')+' '+(r['Last Name']||'')).trim(),
-        ccargo:r['Title']||r['Job Title']||'',municipio:r['Location']||'',
-        clinkedin:r['LinkedIn Profile URL']||r['Profile URL']||'',
-        fuente:'LinkedIn SN',cat:'B',estado:'Nuevo',fecha:new Date().toLocaleDateString('es-CO')
-      })).filter(r=>r.razon);
-    } else if(tipo==='secop'){
-      procesadas=rows.map(r=>({
-        razon:r['Proveedor']||r['Contratista']||r['Proponente']||r['Nombre Proveedor']||'',
-        notas:'Canal indirecto SECOP II. Contrato: '+(r['Objeto']||r['Descripcion']||''),
-        fuente:'SECOP II',cat:'B',estado:'Nuevo',sector:'Consultoría de Ingeniería',fecha:new Date().toLocaleDateString('es-CO')
-      })).filter(r=>r.razon);
+// ── Detecta si un texto UTF-8 tiene caracteres mal decodificados (síntoma de Latin-1 leído como UTF-8)
+function tieneGarbage(texto) {
+  return /Ã[¡-¿]|Ã±|Ã\x83/.test(texto) || /\uFFFD/.test(texto);
+}
+
+// ── Normaliza un valor de sector al canónico de la app
+const SECTOR_MAP = {
+  // Aeroespacial
+  'aeroespacial':'Aeroespacial','aerospace':'Aeroespacial','aéroespacial':'Aeroespacial',
+  // Alta Tecnología y Electrónica
+  'alta tecnologia y electronica':'Alta Tecnología y Electrónica',
+  'alta tecnología y electrónica':'Alta Tecnología y Electrónica',
+  'alta tecnologia':'Alta Tecnología y Electrónica','high tech':'Alta Tecnología y Electrónica',
+  'tecnologia':'Alta Tecnología y Electrónica','tecnología':'Alta Tecnología y Electrónica',
+  // Automotriz y Movilidad
+  'automotriz y movilidad':'Automotriz y Movilidad','automotriz':'Automotriz y Movilidad',
+  'autopartes':'Automotriz y Movilidad','automotive':'Automotriz y Movilidad',
+  'movilidad':'Automotriz y Movilidad',
+  // Bienes de Consumo
+  'bienes de consumo':'Bienes de Consumo','consumer products':'Bienes de Consumo',
+  'consumo':'Bienes de Consumo',
+  // Construcción e Infraestructura
+  'construccion e infraestructura':'Construcción e Infraestructura',
+  'construcción e infraestructura':'Construcción e Infraestructura',
+  'construccion / infraestructura':'Construcción e Infraestructura',
+  'construcción / infraestructura':'Construcción e Infraestructura',
+  'construccion':'Construcción e Infraestructura','construcción':'Construcción e Infraestructura',
+  'infraestructura':'Construcción e Infraestructura','construction':'Construcción e Infraestructura',
+  'ingeniería civil':'Construcción e Infraestructura','ingenieria civil':'Construcción e Infraestructura',
+  // Defensa y Seguridad
+  'defensa y seguridad':'Defensa y Seguridad','defensa':'Defensa y Seguridad','defense':'Defensa y Seguridad',
+  // Energía y Recursos Naturales
+  'energia y recursos naturales':'Energía y Recursos Naturales',
+  'energía y recursos naturales':'Energía y Recursos Naturales',
+  'energia':'Energía y Recursos Naturales','energía':'Energía y Recursos Naturales',
+  'energy':'Energía y Recursos Naturales','energia / gas natural':'Energía y Recursos Naturales',
+  'energía / gas natural':'Energía y Recursos Naturales',
+  'energia renovable':'Energía y Recursos Naturales','energía renovable':'Energía y Recursos Naturales',
+  'mineria':'Equipos Industriales y Minería','minería':'Equipos Industriales y Minería',
+  // Equipos Industriales y Minería
+  'equipos industriales y mineria':'Equipos Industriales y Minería',
+  'equipos industriales y minería':'Equipos Industriales y Minería',
+  'equipos industriales':'Equipos Industriales y Minería',
+  'industry equipment':'Equipos Industriales y Minería',
+  'manufactura avanzada':'Equipos Industriales y Minería',
+  'consultoría de ingeniería':'Equipos Industriales y Minería',
+  'consultoria de ingenieria':'Equipos Industriales y Minería',
+  'consultoria':'Equipos Industriales y Minería',
+  // Espacial
+  'espacial':'Espacial','space':'Espacial',
+  // Materiales y Química
+  'materiales y quimica':'Materiales y Química','materiales y química':'Materiales y Química',
+  'materiales':'Materiales y Química','quimica':'Materiales y Química','química':'Materiales y Química',
+  'materials':'Materiales y Química','petroquimica':'Materiales y Química','petroquímica':'Materiales y Química',
+  // Oil & Gas
+  'oil & gas':'Oil & Gas','oil and gas':'Oil & Gas','oil&gas':'Oil & Gas',
+  'petroleo y gas':'Oil & Gas','petróleo y gas':'Oil & Gas','hidrocarburos':'Oil & Gas',
+  // Salud y Ciencias de la Vida
+  'salud y ciencias de la vida':'Salud y Ciencias de la Vida',
+  'salud':'Salud y Ciencias de la Vida','healthcare':'Salud y Ciencias de la Vida',
+  'ciencias de la vida':'Salud y Ciencias de la Vida',
+  // Deportes y Biomecánica
+  'deportes y biomecanica':'Deportes y Biomecánica','deportes y biomecánica':'Deportes y Biomecánica',
+  'deportes':'Deportes y Biomecánica','sports':'Deportes y Biomecánica','biomecanica':'Deportes y Biomecánica',
+};
+function normalizarSector(s) {
+  if (!s) return '';
+  const key = s.trim().toLowerCase();
+  return SECTOR_MAP[key] || s.trim();
+}
+
+function procesarCSVConTexto(texto, tipo) {
+  const rows = parseCSV(texto);
+  let procesadas = [];
+  if(tipo==='nativo'){
+    procesadas=rows.map(r=>({
+      razon:r['Razón Social']||r['Razon Social']||r['RazÃ³n Social']||'',
+      nit:r['NIT']||'',ciiu:r['CIIU']||'',
+      sector:normalizarSector(r['Sector']||''),
+      depto:r['Departamento']||'',municipio:r['Municipio']||'',
+      tamano:r['Tamaño']||r['Tamano']||r['TamaÃ±o']||'',
+      activos:r['Activos']||'',rep:r['Rep. Legal']||'',
+      web:r['Sitio Web']||r['Web']||'',
+      telempresa:r['Teléfono Empresa']||r['TelÃ©fono Empresa']||'',
+      cat:r['Categoría KAM']||r['CategorÃ­a KAM']||r['Categoria KAM']||'B',
+      estado:r['Estado']||'Nuevo',
+      cnombre:r['Nombre contacto']||'',ccargo:r['Cargo']||'',
+      ccorreo:r['Correo corporativo']||'',
+      ctelefono:r['Teléfono Contacto']||r['TelÃ©fono Contacto']||'',
+      clinkedin:r['LinkedIn URL']||'',
+      hipotesis:r['Hipótesis módulo ANSYS']||r['HipÃ³tesis mÃ³dulo ANSYS']||r['Hipotesis modulo ANSYS']||'',
+      accion:r['Próxima acción']||r['PrÃ³xima acciÃ³n']||'',
+      accionFecha:r['Fecha acción']||r['Fecha acciÃ³n']||'',
+      notas:r['Notas']||'',fuente:r['Fuente']||'CSV nativo',
+      fecha:r['Fecha']||new Date().toLocaleDateString('es-CO')
+    })).filter(r=>r.razon);
+  } else if(tipo==='apollo'){
+    procesadas=rows.map(r=>({
+      razon:r['Company']||r['company']||'',
+      cnombre:((r['First Name']||r['first_name']||'')+' '+(r['Last Name']||r['last_name']||'')).trim(),
+      ccargo:r['Title']||r['title']||'',ccorreo:r['Email']||r['email']||'',
+      ctelefono:r['Phone']||r['phone']||'',municipio:r['City']||r['city']||'',
+      clinkedin:r['LinkedIn Url']||r['linkedin_url']||'',
+      fuente:'Apollo.io',cat:'B',estado:'Nuevo',fecha:new Date().toLocaleDateString('es-CO')
+    })).filter(r=>r.razon);
+  } else if(tipo==='linkedin'){
+    procesadas=rows.map(r=>({
+      razon:r['Company']||r['company']||'',
+      cnombre:((r['First Name']||'')+' '+(r['Last Name']||'')).trim(),
+      ccargo:r['Title']||r['Job Title']||'',municipio:r['Location']||'',
+      clinkedin:r['LinkedIn Profile URL']||r['Profile URL']||'',
+      fuente:'LinkedIn SN',cat:'B',estado:'Nuevo',fecha:new Date().toLocaleDateString('es-CO')
+    })).filter(r=>r.razon);
+  } else if(tipo==='secop'){
+    procesadas=rows.map(r=>({
+      razon:r['Proveedor']||r['Contratista']||r['Proponente']||r['Nombre Proveedor']||'',
+      notas:'Canal indirecto SECOP II. Contrato: '+(r['Objeto']||r['Descripcion']||''),
+      fuente:'SECOP II',cat:'B',estado:'Nuevo',sector:'Consultoría de Ingeniería',
+      fecha:new Date().toLocaleDateString('es-CO')
+    })).filter(r=>r.razon);
+  }
+  return procesadas;
+}
+
+function procesarCSV(input, tipo) {
+  const file = input.files[0]; if (!file) return;
+
+  // Leer primero como ArrayBuffer para detectar encoding
+  const readerBin = new FileReader();
+  readerBin.onload = evBin => {
+    const arr = new Uint8Array(evBin.target.result);
+    // Detectar BOM UTF-8 (EF BB BF)
+    const hasUtf8BOM = arr[0]===0xEF && arr[1]===0xBB && arr[2]===0xBF;
+    // Probar decodificación UTF-8
+    let textoUtf8 = new TextDecoder('utf-8').decode(arr);
+    // Quitar BOM si existe
+    if (textoUtf8.charCodeAt(0)===0xFEFF) textoUtf8 = textoUtf8.slice(1);
+
+    // Si el resultado tiene garbage (síntoma de Latin-1), releer como Windows-1252
+    let textoFinal = textoUtf8;
+    if (tieneGarbage(textoUtf8)) {
+      let textoLatin = new TextDecoder('windows-1252').decode(arr);
+      if (textoLatin.charCodeAt(0)===0xFEFF) textoLatin = textoLatin.slice(1);
+      textoFinal = textoLatin;
     }
-    csvPending[tipo]=procesadas;
-    document.getElementById(tipo+'-msg').textContent=`${procesadas.length} registros detectados. Confirma para agregar al Mapa de Mercado.`;
-    document.getElementById(tipo+'-preview').style.display='block';
+
+    const procesadas = procesarCSVConTexto(textoFinal, tipo);
+    csvPending[tipo] = procesadas;
+    document.getElementById(tipo+'-msg').textContent = `${procesadas.length} registros detectados. Confirma para agregar al Mapa de Mercado.`;
+    document.getElementById(tipo+'-preview').style.display = 'block';
   };
-  reader.readAsText(file,'UTF-8');
+  readerBin.readAsArrayBuffer(file);
 }
 
 function confirmarImport(tipo){
@@ -2887,17 +3100,17 @@ function cargarFeriaEnForm(nombre){
 
 function renderFerias(){
   const FERIAS_DEFAULT=[
-    {nombre:'MinExpo Colombia 2026',fechai:'2026-04-15',fechaf:'2026-04-16',ciudad:'Medellín',sector:'Minería',estado:'Finalizado',prioridad:'Alta',url:'https://acmineria.com.co',metaA:5,metaR:3,cA:0,ctotal:0,rA:0,oA:0,obs:''},
-    {nombre:'Congreso Naturgas 2026',fechai:'2026-04-15',fechaf:'2026-04-17',ciudad:'Cartagena',sector:'Energía / Gas natural',estado:'Finalizado',prioridad:'Alta',url:'https://congresonaturgas.com.co',metaA:5,metaR:3,cA:0,ctotal:0,rA:0,oA:0,obs:''},
-    {nombre:'ExpoIndustrial 2026',fechai:'2026-05-06',fechaf:'2026-05-08',ciudad:'Cali',sector:'Manufactura Avanzada',estado:'Confirmado',prioridad:'Alta',url:'https://expoindustrial.com.co',metaA:6,metaR:3,cA:0,ctotal:0,rA:0,oA:0,obs:''},
-    {nombre:'Energyear Colombia 2026',fechai:'2026-05-06',fechaf:'2026-05-07',ciudad:'Medellín',sector:'Energía / Gas natural',estado:'Confirmado',prioridad:'Media',url:'https://energyear.com/es/colombia/',metaA:4,metaR:2,cA:0,ctotal:0,rA:0,oA:0,obs:''},
-    {nombre:'Feria Autopartes Medellín 2026',fechai:'2026-06-24',fechaf:'2026-06-26',ciudad:'Medellín',sector:'Autopartes',estado:'Confirmado',prioridad:'Media',url:'',metaA:5,metaR:3,cA:0,ctotal:0,rA:0,oA:0,obs:''},
+    {nombre:'MinExpo Colombia 2026',fechai:'2026-04-15',fechaf:'2026-04-16',ciudad:'Medellín',sector:'Equipos Industriales y Minería',estado:'Finalizado',prioridad:'Alta',url:'https://acmineria.com.co',metaA:5,metaR:3,cA:0,ctotal:0,rA:0,oA:0,obs:''},
+    {nombre:'Congreso Naturgas 2026',fechai:'2026-04-15',fechaf:'2026-04-17',ciudad:'Cartagena',sector:'Energía y Recursos Naturales',estado:'Finalizado',prioridad:'Alta',url:'https://congresonaturgas.com.co',metaA:5,metaR:3,cA:0,ctotal:0,rA:0,oA:0,obs:''},
+    {nombre:'ExpoIndustrial 2026',fechai:'2026-05-06',fechaf:'2026-05-08',ciudad:'Cali',sector:'Equipos Industriales y Minería',estado:'Confirmado',prioridad:'Alta',url:'https://expoindustrial.com.co',metaA:6,metaR:3,cA:0,ctotal:0,rA:0,oA:0,obs:''},
+    {nombre:'Energyear Colombia 2026',fechai:'2026-05-06',fechaf:'2026-05-07',ciudad:'Medellín',sector:'Energía y Recursos Naturales',estado:'Confirmado',prioridad:'Media',url:'https://energyear.com/es/colombia/',metaA:4,metaR:2,cA:0,ctotal:0,rA:0,oA:0,obs:''},
+    {nombre:'Feria Autopartes Medellín 2026',fechai:'2026-06-24',fechaf:'2026-06-26',ciudad:'Medellín',sector:'Automotriz y Movilidad',estado:'Confirmado',prioridad:'Media',url:'',metaA:5,metaR:3,cA:0,ctotal:0,rA:0,oA:0,obs:''},
     {nombre:'Colombia Oil & Gas 2026',fechai:'2026-07-23',fechaf:'2026-07-24',ciudad:'Bogotá',sector:'Oil & Gas',estado:'Pendiente',prioridad:'Alta',url:'https://colombiaoilandgas.co',metaA:4,metaR:2,cA:0,ctotal:0,rA:0,oA:0,obs:''},
-    {nombre:'ExpoCamacol 2026',fechai:'2026-08-26',fechaf:'2026-08-29',ciudad:'Medellín',sector:'Construcción / Infraestructura',estado:'Confirmado',prioridad:'Media',url:'https://expocamacol.com',metaA:5,metaR:3,cA:0,ctotal:0,rA:0,oA:0,obs:''},
+    {nombre:'ExpoCamacol 2026',fechai:'2026-08-26',fechaf:'2026-08-29',ciudad:'Medellín',sector:'Construcción e Infraestructura',estado:'Confirmado',prioridad:'Media',url:'https://expocamacol.com',metaA:5,metaR:3,cA:0,ctotal:0,rA:0,oA:0,obs:''},
     {nombre:'XXIII Congreso ACIPET 2026',fechai:'2026-09-22',fechaf:'2026-09-24',ciudad:'Bucaramanga',sector:'Oil & Gas',estado:'Confirmado',prioridad:'Alta',url:'https://acipet.com',metaA:7,metaR:4,cA:0,ctotal:0,rA:0,oA:0,obs:''},
     {nombre:'FIB Bogotá 2026',fechai:'2026-09-26',fechaf:'2026-09-30',ciudad:'Bogotá',sector:'Multi-sector',estado:'Confirmado',prioridad:'Alta',url:'https://feriainternacional.com',metaA:8,metaR:4,cA:0,ctotal:0,rA:0,oA:0,obs:''},
-    {nombre:'CILAMCE 2026',fechai:'2026-10-26',fechaf:'2026-10-29',ciudad:'Bogotá',sector:'Ingeniería Civil',estado:'Confirmado',prioridad:'Media',url:'',metaA:4,metaR:2,cA:0,ctotal:0,rA:0,oA:0,obs:''},
-    {nombre:'ExpoSolar Colombia 2026',fechai:'2026-10-28',fechaf:'2026-10-30',ciudad:'Bogotá',sector:'Energía Renovable',estado:'Confirmado',prioridad:'Media',url:'https://www.feriaexposolar.com',metaA:4,metaR:2,cA:0,ctotal:0,rA:0,oA:0,obs:''},
+    {nombre:'CILAMCE 2026',fechai:'2026-10-26',fechaf:'2026-10-29',ciudad:'Bogotá',sector:'Construcción e Infraestructura',estado:'Confirmado',prioridad:'Media',url:'',metaA:4,metaR:2,cA:0,ctotal:0,rA:0,oA:0,obs:''},
+    {nombre:'ExpoSolar Colombia 2026',fechai:'2026-10-28',fechaf:'2026-10-30',ciudad:'Bogotá',sector:'Energía y Recursos Naturales',estado:'Confirmado',prioridad:'Media',url:'https://www.feriaexposolar.com',metaA:4,metaR:2,cA:0,ctotal:0,rA:0,oA:0,obs:''},
     {nombre:'Cumbre Petróleo Gas Energía',fechai:'2026-11-01',fechaf:'2026-11-01',ciudad:'Cartagena',sector:'Oil & Gas',estado:'Pendiente',prioridad:'Alta',url:'https://cumbrepetroleoygas.com',metaA:6,metaR:3,cA:0,ctotal:0,rA:0,oA:0,obs:''},
   ];
   let lista=[...ferias];
@@ -3169,6 +3382,24 @@ async function cargarMarcadores(){
 function filtrarMapaGeo(){if(geoMap) cargarMarcadores();}
 
 // ══════════════════════════════════════════════════════
+// SYNC FORM HELPERS
+// ══════════════════════════════════════════════════════
+function poblarFormSync() {
+  const u = document.getElementById('sync-user');
+  const r = document.getElementById('sync-repo');
+  const f = document.getElementById('sync-file');
+  const b = document.getElementById('sync-branch');
+  // Token nunca se pre-rellena en el form por seguridad
+  if (u) u.value = syncConfig.user || '';
+  if (r) r.value = syncConfig.repo || '';
+  if (f) f.value = syncConfig.file || 'data.json';
+  if (b) b.value = syncConfig.branch || 'main';
+  // Mostrar estado de configuración
+  const configured = syncConfigured();
+  setSyncIndicator(configured ? 'ok' : 'none', configured ? 'Configurado' : 'Sin configurar');
+}
+
+// ══════════════════════════════════════════════════════
 // CANAL ESPECÍFICO HANDLER
 // ══════════════════════════════════════════════════════
 function actualizarCanalEspecifico(){
@@ -3191,7 +3422,7 @@ function actualizarCanalEspecifico(){
   <div class="mob-more-item" id="mob-mi-ferias"     onclick="mobNav('ferias',this)">🗓 Ferias y Eventos</div>
   <div class="mob-more-item" id="mob-mi-reporte"    onclick="mobNav('reporte',this)">📨 Reporte Lima</div>
   <div class="mob-more-item" id="mob-mi-catalogo"   onclick="mobNav('catalogo',this)">⊞ Catálogo ANSYS</div>
-  <div class="mob-more-item" id="mob-mi-sincronizacion" onclick="mobNav('sincronizacion',this)">☁ Sincronización</div>
+  <div class="mob-more-item" id="mob-mi-sync"       onclick="mobNav('sync',this)">☁ Sincronización</div>
 </div>
 <nav id="mobile-nav">
   <div class="mob-nav-item active" id="mob-tab-dashboard"      onclick="mobNav('dashboard',this)">
