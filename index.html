@@ -34,6 +34,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:#EDF2F7;color:var(--texto
 .stat-mini-val{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#fff;}
 .save-indicator{font-size:10px;color:rgba(255,255,255,0.4);text-align:center;margin-top:6px;font-family:'IBM Plex Mono',monospace;}
 .sidebar-event-badge{background:#c53030;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;margin-left:4px;font-family:'IBM Plex Mono',monospace;}
+.sidebar-accion-badge{background:#c53030;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px;margin-left:auto;font-family:'IBM Plex Mono',monospace;display:none;}
 #main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
 #topbar{height:var(--header-h);background:var(--blanco);border-bottom:1px solid var(--gris-med);display:flex;align-items:center;padding:0 24px;gap:16px;flex-shrink:0;}
 .topbar-title{font-size:16px;font-weight:600;color:var(--azul);flex:1;}
@@ -166,6 +167,8 @@ hr.section-hr{border:none;border-top:1px solid var(--gris-med);margin:18px 0;}
 .kanban-card{background:#fff;border:1px solid var(--gris-med);border-radius:5px;padding:8px 10px;margin-bottom:6px;font-size:12px;}
 .kanban-card-empresa{font-weight:600;color:var(--texto);margin-bottom:2px;}
 .kanban-card-meta{color:var(--gris-dark);font-size:11px;}
+.kanban-convert-btn{display:flex;align-items:center;gap:5px;width:100%;margin-top:6px;padding:4px 8px;border:1.5px solid var(--verde);border-radius:4px;background:#f0fff4;color:#276749;font-size:11px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:all 0.15s;}
+.kanban-convert-btn:hover{background:var(--verde);color:#fff;}
 /* Reporte */
 .reporte-box{background:#f0f7ff;border:1.5px solid var(--azul-light);border-radius:8px;padding:20px;margin-bottom:16px;}
 .reporte-numero{font-family:'IBM Plex Mono',monospace;font-size:32px;font-weight:700;color:var(--azul-med);}
@@ -471,14 +474,14 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
 <div id="app">
   <nav id="sidebar">
     <div class="sidebar-brand">
-      <span class="brand-tag">KAM Tool v10</span>
+      <span class="brand-tag">KAM Tool v10.1</span>
       <span class="brand-name">Techbrand Colombia</span>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-section-label">Prospectos</div>
       <div class="nav-item active" onclick="switchPanel('dashboard',this)"><span class="nav-icon">◈</span> Dashboard</div>
       <div class="nav-item" onclick="switchPanel('rues',this)"><span class="nav-icon">＋</span> Registrar empresa</div>
-      <div class="nav-item" onclick="switchPanel('mapa',this)"><span class="nav-icon">≡</span> Mapa de Mercado</div>
+      <div class="nav-item" onclick="switchPanel('mapa',this)"><span class="nav-icon">≡</span> Mapa de Mercado<span class="sidebar-accion-badge" id="sb-accion-badge">0</span></div>
       <div class="nav-item" onclick="switchPanel('mapageo',this)"><span class="nav-icon">◎</span> Mapa Geográfico</div>
       <div class="nav-item" onclick="switchPanel('importar',this)"><span class="nav-icon">↑</span> Importar CSV</div>
       <div class="nav-item" onclick="switchPanel('secop',this)"><span class="nav-icon">⊙</span> SECOP II</div>
@@ -526,10 +529,10 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
             <div class="stat-val" id="d-opor">0</div>
             <div class="stat-sub" id="d-forecast">Forecast: USD $0</div>
           </div>
-          <div class="stat-card naranja">
+          <div class="stat-card naranja" style="cursor:pointer" onclick="irAMapaVencidas()" title="Clic para ver en Mapa de Mercado">
             <div class="stat-label">Acciones vencidas</div>
             <div class="stat-val" id="d-vencidas">0</div>
-            <div class="stat-sub">Requieren seguimiento hoy</div>
+            <div class="stat-sub">Clic para ver en el Mapa</div>
           </div>
           <div class="stat-card accent">
             <div class="stat-label">En gestión</div>
@@ -565,17 +568,6 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
         <div class="card">
           <div class="card-header"><span class="card-title">Distribución por sector</span></div>
           <div class="card-body"><div id="d-sectores" class="stats-row" style="grid-template-columns:repeat(4,1fr)"></div></div>
-        </div>
-        <!-- ── Visualizaciones ── -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
-          <div class="card" style="margin-bottom:0">
-            <div class="card-header"><span class="card-title">Embudo de estados</span></div>
-            <div class="card-body" id="d-embudo-container" style="padding:16px 18px"></div>
-          </div>
-          <div class="card" style="margin-bottom:0">
-            <div class="card-header"><span class="card-title">Empresas por sector — top 6</span></div>
-            <div class="card-body" id="d-barras-container" style="padding:16px 18px"></div>
-          </div>
         </div>
         <div class="card">
           <div class="card-header"><span class="card-title">Acciones vencidas — requieren seguimiento</span></div>
@@ -788,16 +780,7 @@ tbody tr.fila-empresa.drawer-activo td{background:#dbeafe!important;}
             <div class="table-wrap">
               <table>
                 <thead>
-                  <tr>
-                    <th>#</th>
-                    <th data-sort="razon" onclick="sortMapa(this)" style="cursor:pointer;user-select:none">Razón Social <span class="sort-icon">⇅</span></th>
-                    <th data-sort="sector" onclick="sortMapa(this)" style="cursor:pointer;user-select:none">Sector <span class="sort-icon">⇅</span></th>
-                    <th data-sort="cat" onclick="sortMapa(this)" style="cursor:pointer;user-select:none">Cat. <span class="sort-icon">⇅</span></th>
-                    <th data-sort="estado" onclick="sortMapa(this)" style="cursor:pointer;user-select:none">Estado <span class="sort-icon">⇅</span></th>
-                    <th data-sort="accionFecha" onclick="sortMapa(this)" style="cursor:pointer;user-select:none">Próxima acción <span class="sort-icon">⇅</span></th>
-                    <th>Contacto principal</th>
-                    <th></th>
-                  </tr>
+                  <tr><th>#</th><th>Razón Social</th><th>Sector</th><th>Cat.</th><th>Estado</th><th>Próxima acción</th><th>Contacto principal</th><th>Acceso</th><th>Acciones</th></tr>
                 </thead>
                 <tbody id="mapa-tbody"></tbody>
               </table>
@@ -1315,6 +1298,7 @@ git push -u origin main</div>
   <div id="drawer-footer">
     <button class="btn btn-primary btn-sm" onclick="abrirEdicionDesdeDrawer()">Editar ficha</button>
     <button class="btn btn-success btn-sm" onclick="registrarActividadRapida()">+ Actividad</button>
+    <button class="btn btn-accent btn-sm" onclick="nuevaOportunidadDesdeDrawer()" title="Nueva oportunidad con esta empresa precargada">+ Oportunidad</button>
     <button class="btn btn-ghost btn-sm" onclick="cerrarDrawer()">Cerrar</button>
   </div>
 </div>
@@ -1410,10 +1394,7 @@ function setSyncIndicator(estado, texto) {
     none:    'background:rgba(0,0,0,0.2);color:rgba(255,255,255,0.4)'
   };
   el.style.cssText = 'margin-top:8px;padding:6px 8px;border-radius:5px;font-size:10px;font-family:"IBM Plex Mono",monospace;text-align:center;' + (estilos[estado]||estilos.none);
-  const hora = new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
-  const prefix = estado === 'error' ? '✕ ' : estado === 'ok' ? '✓ ' : '☁ ';
-  el.textContent = prefix + texto + ((['ok','error'].includes(estado)) ? ' ' + hora : '');
-  el.title = estado === 'error' ? 'Abre el panel Sincronización para ver el detalle del error' : '';
+  el.textContent = '☁ ' + texto;
 }
 
 function githubAPIUrl() {
@@ -1499,7 +1480,7 @@ async function pullGitHub(manual = false) {
     ferias         = d.ferias    || [];
     pipeline       = d.pipeline  || [];
     oportunidades  = d.oportunidades || [];
-    catalogoANSYS  = (d.catalogo && d.catalogo.length > 0) ? d.catalogo : (catalogoANSYS.length > 0 ? catalogoANSYS : JSON.parse(JSON.stringify(CATALOGO_DEFAULT)));
+    catalogoANSYS  = d.catalogo  || JSON.parse(JSON.stringify(CATALOGO_DEFAULT));
     migrarContactosLegacy();
     // Guardar en localStorage como caché local
     localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
@@ -1570,7 +1551,7 @@ function cargarDatos() {
     empresas = d.empresas || []; alertasSecop = d.alertas || [];
     ferias = d.ferias || []; pipeline = d.pipeline || [];
     oportunidades = d.oportunidades || [];
-    catalogoANSYS = (d.catalogo && d.catalogo.length > 0) ? d.catalogo : JSON.parse(JSON.stringify(CATALOGO_DEFAULT));
+    catalogoANSYS = d.catalogo || JSON.parse(JSON.stringify(CATALOGO_DEFAULT));
     migrarContactosLegacy();
   }
   // 3. Si hay sync configurado, intentar pull en background (sin bloquear)
@@ -1654,6 +1635,27 @@ function irARegistrar() {
   if (navItem) switchPanel('rues', navItem);
 }
 
+// Ir al mapa con filtro de vencidas preactivado
+function irAMapaVencidas() {
+  const navItem = document.querySelector('.nav-item[onclick*="mapa"]');
+  if (navItem) switchPanel('mapa', navItem);
+  setTimeout(() => {
+    const sel = document.getElementById('mapa-accion');
+    if (sel) { sel.value = 'vencida'; renderMapa(); }
+  }, 50);
+}
+
+// Cambio 2: Nueva oportunidad desde el drawer con empresa precargada
+function nuevaOportunidadDesdeDrawer() {
+  if (drawerIdx === null) return;
+  const empIdx = drawerIdx;
+  cerrarDrawer();
+  // Navegar a oportunidades y abrir modal con empresa prellenada
+  const navItem = document.querySelector('.nav-item[onclick*="oportunidades"]');
+  if (navItem) switchPanel('oportunidades', navItem);
+  setTimeout(() => abrirModalOportunidad(null, empIdx), 100);
+}
+
 // ══════════════════════════════════════════════════════
 // SIDEBAR
 // ══════════════════════════════════════════════════════
@@ -1664,10 +1666,17 @@ function actualizarSidebar() {
   const pipeline_val = opActivas.reduce((s,o)=>s+(parseFloat(o.valor||0)*parseFloat(o.prob||0)/100), 0);
   document.getElementById('sb-pipeline').textContent = '$'+Math.round(pipeline_val/1000)+'k';
   document.getElementById('sb-esss').textContent = empresas.filter(e=>e.esss==='Si').length;
-  const hoy = new Date();
+
+  // Badge acciones vencidas junto a Mapa de Mercado
+  const hoy = new Date(); hoy.setHours(0,0,0,0);
+  const nVencidas = empresas.filter(e=>e.accion&&e.accionFecha&&new Date(e.accionFecha)<hoy).length;
+  const accionBadge = document.getElementById('sb-accion-badge');
+  if (accionBadge) { accionBadge.textContent = nVencidas; accionBadge.style.display = nVencidas > 0 ? 'inline' : 'none'; }
+
+  const hoyF = new Date();
   const hayProximos = ferias.some(f=>{
     if(f.estado==='Finalizado') return false;
-    return Math.ceil((new Date(f.fechai)-hoy)/(864e5))<=90;
+    return Math.ceil((new Date(f.fechai)-hoyF)/(864e5))<=90;
   });
   const badge = document.getElementById('sb-eventos-badge');
   if (badge) badge.style.display = hayProximos ? 'inline' : 'none';
@@ -1703,58 +1712,6 @@ function actualizarDashboard() {
     const n = empresas.filter(e=>e.sector===s).length;
     return `<div class="stat-card" style="padding:12px"><div class="stat-label" style="font-size:10px">${s}</div><div class="stat-val" style="font-size:22px">${n}</div></div>`;
   }).join('');
-
-  // Embudo de estados
-  const ESTADOS_EMBUDO = [
-    { label:'Nuevo', color:'#2E75B6' },
-    { label:'Contactado', color:'#D69E2E' },
-    { label:'Reunión agendada', color:'#805AD5' },
-    { label:'Oportunidad activa', color:'#38A169' }
-  ];
-  const maxEmbudo = total || 1;
-  const embudoEl = document.getElementById('d-embudo-container');
-  if (embudoEl) {
-    embudoEl.innerHTML = ESTADOS_EMBUDO.map(e => {
-      const n = empresas.filter(x => x.estado === e.label).length;
-      const pct = Math.round(n / maxEmbudo * 100);
-      const barW = Math.max(4, pct); // mínimo visual
-      return `<div style="margin-bottom:12px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-          <span style="font-size:12px;font-weight:600;color:var(--texto)">${e.label}</span>
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:${e.color}">${n}</span>
-        </div>
-        <div style="background:var(--gris-med);border-radius:99px;height:10px;overflow:hidden">
-          <div style="width:${barW}%;height:100%;background:${e.color};border-radius:99px;transition:width 0.4s"></div>
-        </div>
-        <div style="font-size:10px;color:var(--gris-dark);margin-top:2px;font-family:'IBM Plex Mono',monospace">${pct}% del total</div>
-      </div>`;
-    }).join('') + `<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--gris-med);font-size:11px;color:var(--gris-dark)">
-      <span style="font-family:'IBM Plex Mono',monospace">ESSS excluidos: ${empresas.filter(e=>e.esss==='Si').length} · Sin categorizar: ${empresas.filter(e=>!e.estado||e.estado==='Nuevo').length}</span>
-    </div>`;
-  }
-
-  // Barras horizontales — top 6 sectores
-  const sectorCount = {};
-  empresas.forEach(e => { if(e.sector) sectorCount[e.sector] = (sectorCount[e.sector]||0)+1; });
-  const top6 = Object.entries(sectorCount).sort((a,b)=>b[1]-a[1]).slice(0,6);
-  const maxBar = top6.length > 0 ? top6[0][1] : 1;
-  const barrasEl = document.getElementById('d-barras-container');
-  if (barrasEl) {
-    barrasEl.innerHTML = top6.length === 0
-      ? '<p class="text-muted">Sin datos.</p>'
-      : top6.map(([s,n]) => {
-          const pct = Math.round(n / maxBar * 100);
-          return `<div style="margin-bottom:10px">
-            <div style="display:flex;justify-content:space-between;margin-bottom:3px">
-              <span style="font-size:11px;color:var(--texto);font-weight:500;max-width:70%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s}</span>
-              <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:var(--azul)">${n}</span>
-            </div>
-            <div style="background:var(--gris-med);border-radius:99px;height:8px;overflow:hidden">
-              <div style="width:${pct}%;height:100%;background:var(--azul-med);border-radius:99px;transition:width 0.4s"></div>
-            </div>
-          </div>`;
-        }).join('');
-  }
 
   // Acciones vencidas
   const vtbody = document.getElementById('d-vencidas-tbody');
@@ -1972,28 +1929,16 @@ function renderMapa() {
   });
 
   document.getElementById('mapa-count').textContent = `${filtradas.length} empresa${filtradas.length!==1?'s':''}`;
-
-  // Aplicar ordenamiento si hay columna activa
-  if (mapaSort.col) {
-    const col = mapaSort.col;
-    filtradas.sort((a, b) => {
-      let va = (a[col] || '').toString().toLowerCase();
-      let vb = (b[col] || '').toString().toLowerCase();
-      // Para fechas: comparar como string ISO (YYYY-MM-DD) — funciona correctamente
-      if (va < vb) return -1 * mapaSort.dir;
-      if (va > vb) return 1 * mapaSort.dir;
-      return 0;
-    });
-  }
-
   const tbody=document.getElementById('mapa-tbody');
   if(filtradas.length===0){
-    tbody.innerHTML=`<tr><td colspan="8" style="text-align:center;padding:32px;color:var(--gris-dark)">Sin resultados.</td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:32px;color:var(--gris-dark)">Sin resultados.</td></tr>`;
     return;
   }
 
   tbody.innerHTML = filtradas.map((e,i)=>{
     const idx=empresas.indexOf(e);
+    let webUrl=e.web||'';
+    if(webUrl && !webUrl.startsWith('http')) webUrl='https://'+webUrl;
 
     const contactos=e.contactos||[];
     const principal=contactos.find(c=>c.rol==='Decisor técnico')||contactos[0];
@@ -2001,6 +1946,17 @@ function renderMapa() {
     const contactoCell=principal
       ?`<strong style="font-size:12px">${principal.nombre}</strong><br><span class="text-muted">${principal.cargo||''}</span>${extras>0?`<span class="multi-contacto-count">+${extras}</span>`:''}`
       :`<span class="text-muted">Sin contacto</span>`;
+
+    const c0=contactos[0]||{};
+    const liUrl=(()=>{let u=c0.linkedin||e.clinkedin||'';return u&&!u.startsWith('http')?'https://'+u:u;})();
+    const correoR=c0.correo||e.ccorreo||'';
+    const telR=c0.telefono||e.ctelefono||e.telempresa||'';
+    const iconos=`<div class="action-icons">
+      ${webUrl?`<a href="${webUrl}" target="_blank" class="link-icon" title="Web">🌐</a>`:'<span style="width:28px;display:inline-block"></span>'}
+      ${liUrl?`<a href="${liUrl}" target="_blank" class="link-icon" title="LinkedIn">in</a>`:'<span style="width:28px;display:inline-block"></span>'}
+      ${correoR?`<a href="mailto:${correoR}" class="link-icon" title="${correoR}">✉</a>`:'<span style="width:28px;display:inline-block"></span>'}
+      ${telR?`<a href="tel:${telR.replace(/\s/g,'')}" class="link-icon" title="${telR}">📞</a>`:'<span style="width:28px;display:inline-block"></span>'}
+    </div>`;
 
     // Próxima acción con semáforo
     let accionHtml='<span class="text-muted">—</span>';
@@ -2034,8 +1990,12 @@ function renderMapa() {
       </td>
       <td data-label="Próxima acción">${accionHtml}</td>
       <td data-label="Contacto">${contactoCell}</td>
+      <td data-label="Acceso" onclick="event.stopPropagation()">${iconos}</td>
       <td data-label="" onclick="event.stopPropagation()">
-        <button class="btn btn-primary btn-sm" onclick="abrirDrawer(${idx},event)">Ver</button>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-primary btn-sm" onclick="abrirDrawer(${idx},event)">Ver</button>
+          <button class="btn btn-ghost btn-sm" onclick="abrirEdicion(${idx})">Editar</button>
+        </div>
       </td>
     </tr>`;
   }).join('');
@@ -2045,32 +2005,6 @@ function cambiarEstado(idx,val) {
   empresas[idx].estado=val;
   empresas[idx].fecha_estado=new Date().toLocaleDateString('es-CO');
   guardarDatos(); actualizarSidebar(); renderMapa();
-}
-
-// ── Ordenamiento del Mapa de Mercado ──
-let mapaSort = { col: null, dir: 1 }; // dir: 1=asc, -1=desc
-
-function sortMapa(th) {
-  const col = th.dataset.sort;
-  if (mapaSort.col === col) {
-    mapaSort.dir *= -1;
-  } else {
-    mapaSort.col = col;
-    mapaSort.dir = 1;
-  }
-  // Actualizar iconos en todos los th
-  document.querySelectorAll('#panel-mapa thead th[data-sort]').forEach(t => {
-    const icon = t.querySelector('.sort-icon');
-    if (!icon) return;
-    if (t.dataset.sort === col) {
-      icon.textContent = mapaSort.dir === 1 ? '↑' : '↓';
-      icon.style.color = '#fff';
-    } else {
-      icon.textContent = '⇅';
-      icon.style.color = 'rgba(255,255,255,0.5)';
-    }
-  });
-  renderMapa();
 }
 
 // ══════════════════════════════════════════════════════
@@ -2796,21 +2730,12 @@ function cerrarModalOp(){
 // CATÁLOGO ANSYS
 // ══════════════════════════════════════════════════════
 function renderCatalogo(){
-  const famOpts=['Structures','Fluids','Electronics','3D Design','Other'];
   const famClasses={'Structures':'fam-structures','Fluids':'fam-fluids','Electronics':'fam-electronics','3D Design':'fam-design','Other':'fam-other'};
   const tbody=document.getElementById('catalogo-tbody');
   tbody.innerHTML=catalogoANSYS.map((p,i)=>`<tr>
-    <td>
-      <select style="border:1.5px solid var(--gris-med);border-radius:4px;padding:4px 6px;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer" onchange="actualizarCampoProducto(${i},'familia',this.value)">
-        ${famOpts.map(f=>`<option value="${f}" ${p.familia===f?'selected':''}><span class="${famClasses[f]||'fam-other'}">${f}</span></option>`).join('')}
-      </select>
-    </td>
-    <td>
-      <input type="text" value="${esc(p.nombre)}" style="width:100%;min-width:160px;padding:4px 8px;border:1.5px solid var(--gris-med);border-radius:4px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:600" onchange="actualizarCampoProducto(${i},'nombre',this.value)" onblur="actualizarCampoProducto(${i},'nombre',this.value)">
-    </td>
-    <td>
-      <input type="text" value="${esc(p.desc)}" style="width:100%;min-width:180px;padding:4px 8px;border:1.5px solid var(--gris-med);border-radius:4px;font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:var(--gris-dark)" onchange="actualizarCampoProducto(${i},'desc',this.value)" onblur="actualizarCampoProducto(${i},'desc',this.value)">
-    </td>
+    <td><span class="producto-familia ${famClasses[p.familia]||'fam-other'}">${p.familia}</span></td>
+    <td><strong>${p.nombre}</strong></td>
+    <td style="font-size:12px;color:var(--gris-dark)">${p.desc}</td>
     <td>
       <div style="display:flex;align-items:center;gap:6px">
         <span style="color:var(--gris-dark);font-size:12px">$</span>
@@ -2828,10 +2753,6 @@ function renderCatalogo(){
   </tr>`).join('');
 }
 
-function actualizarCampoProducto(i,campo,val){
-  if(!val.trim()) return; // no borrar con campo vacío
-  catalogoANSYS[i][campo]=val.trim(); guardarDatos();
-}
 function actualizarPrecio(i,val){
   catalogoANSYS[i].precio=parseFloat(val)||0; guardarDatos(); toast('Precio actualizado.');
 }
@@ -3404,18 +3325,47 @@ function cambiarEtapaPipeline(id,etapa){
   guardarDatos(); renderPipeline();
 }
 function eliminarPipeline(id){pipeline=pipeline.filter(c=>c.id!==id);guardarDatos();renderPipeline();toast('Contacto eliminado.');}
+
+// Cambio 3: convertir contacto de pipeline a oportunidad formal
+function convertirPipelineAOportunidad(id) {
+  const c = pipeline.find(x => x.id === id);
+  if (!c) return;
+  // Buscar el índice de la empresa en el mapa para precargar
+  const empIdx = empresas.findIndex(e => e.razon.toLowerCase() === c.empresa.toLowerCase());
+  const navItem = document.querySelector('.nav-item[onclick*="oportunidades"]');
+  if (navItem) switchPanel('oportunidades', navItem);
+  setTimeout(() => {
+    abrirModalOportunidad(null, empIdx >= 0 ? empIdx : null);
+    // Si no encontró la empresa, al menos prellenar el campo texto
+    if (empIdx < 0) {
+      const campo = document.getElementById('op-empresa');
+      if (campo) campo.value = c.empresa;
+    }
+    // Preseleccionar etapa Propuesta si venía de Propuesta enviada
+    const etapaSel = document.getElementById('op-etapa');
+    if (etapaSel && c.etapa === 'Propuesta enviada') { etapaSel.value = 'Propuesta'; autoProb(); }
+    else if (etapaSel && c.etapa === 'Demo realizada') { etapaSel.value = 'Diagnóstico'; autoProb(); }
+    // Precargar nombre de oportunidad con el contacto de feria
+    const nombreSel = document.getElementById('op-nombre');
+    if (nombreSel && !nombreSel.value) nombreSel.value = c.empresa + (c.feria ? ' — ' + c.feria.replace(' 2026','') : '');
+    toast('Empresa y etapa precargadas. Completa y guarda la oportunidad.');
+  }, 150);
+}
 function renderPipeline(){
   const ETAPAS=['Contactado en feria','Mensaje enviado','Reunión agendada','Demo realizada','Propuesta enviada','Cerrado ganado'];
   const kanban=document.getElementById('pipeline-kanban');
   kanban.innerHTML=ETAPAS.map(etapa=>{
     const items=pipeline.filter(c=>c.etapa===etapa);
+    // Etapas donde aparece el botón de conversión a oportunidad
+    const mostrarConversion = ['Demo realizada','Propuesta enviada'].includes(etapa);
     return `<div class="kanban-col">
       <div class="kanban-col-title">${etapa} <span style="font-weight:400;color:var(--gris-dark)">(${items.length})</span></div>
       ${items.length===0?'<div class="text-muted" style="font-size:11px;text-align:center;padding:8px">—</div>'
         :items.map(c=>`<div class="kanban-card">
           <div class="kanban-card-empresa">${c.empresa}</div>
           <div class="kanban-card-meta">${c.nombre}${c.cargo?' · '+c.cargo:''}</div>
-          ${c.feria?`<span class="kanban-card-feria">${c.feria.replace(' 2026','')}</span>`:''}
+          ${c.feria?`<span style="font-size:10px;background:var(--azul-xlight);color:var(--azul);padding:1px 6px;border-radius:10px;display:inline-block;margin-top:3px">${c.feria.replace(' 2026','')}</span>`:''}
+          ${mostrarConversion?`<button class="kanban-convert-btn" onclick="convertirPipelineAOportunidad(${c.id})">💰 Crear oportunidad</button>`:''}
           <div style="margin-top:6px;display:flex;gap:4px;flex-wrap:wrap">
             ${ETAPAS.filter(e=>e!==etapa).map(e=>`<button onclick="cambiarEtapaPipeline(${c.id},'${e}')" style="font-size:10px;padding:2px 6px;border:1px solid var(--gris-med);border-radius:3px;background:#fff;cursor:pointer;color:var(--azul)">${e==='Cerrado ganado'?'✓ Cerrar':e.split(' ')[0]}</button>`).join('')}
             <button onclick="eliminarPipeline(${c.id})" style="font-size:10px;padding:2px 6px;border:1px solid #fed7d7;border-radius:3px;background:#fff;cursor:pointer;color:#c53030">✗</button>
