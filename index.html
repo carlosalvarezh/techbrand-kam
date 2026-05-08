@@ -1499,7 +1499,7 @@ async function pullGitHub(manual = false) {
     ferias         = d.ferias    || [];
     pipeline       = d.pipeline  || [];
     oportunidades  = d.oportunidades || [];
-    catalogoANSYS  = d.catalogo  || JSON.parse(JSON.stringify(CATALOGO_DEFAULT));
+    catalogoANSYS  = (d.catalogo && d.catalogo.length > 0) ? d.catalogo : (catalogoANSYS.length > 0 ? catalogoANSYS : JSON.parse(JSON.stringify(CATALOGO_DEFAULT)));
     migrarContactosLegacy();
     // Guardar en localStorage como caché local
     localStorage.setItem(STORAGE_KEY, JSON.stringify(d));
@@ -1570,7 +1570,7 @@ function cargarDatos() {
     empresas = d.empresas || []; alertasSecop = d.alertas || [];
     ferias = d.ferias || []; pipeline = d.pipeline || [];
     oportunidades = d.oportunidades || [];
-    catalogoANSYS = d.catalogo || JSON.parse(JSON.stringify(CATALOGO_DEFAULT));
+    catalogoANSYS = (d.catalogo && d.catalogo.length > 0) ? d.catalogo : JSON.parse(JSON.stringify(CATALOGO_DEFAULT));
     migrarContactosLegacy();
   }
   // 3. Si hay sync configurado, intentar pull en background (sin bloquear)
